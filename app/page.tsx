@@ -1,11 +1,11 @@
 import PropertyCard from '@/components/PropertyCard'
-import { supabaseAdmin } from '@/lib/supabase-server'
+import { getSupabaseAdmin } from "@/lib/supabase-server"
 import { Property, parseOccupancy } from '@/lib/types'
 
 export const revalidate = 3600
 
 async function getProperties(): Promise<Property[]> {
-  const { data, error } = await supabaseAdmin.from('properties').select('*').order('property_name')
+  const { data, error } = await getSupabaseAdmin().from('properties').select('*').order('property_name')
 
   if (error) {
     console.error('Error fetching properties:', error.message)

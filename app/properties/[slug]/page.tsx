@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { supabaseAdmin } from '@/lib/supabase-server'
+import { getSupabaseAdmin } from "@/lib/supabase-server"
 import { Property, occupancyBadge, slugify } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
 async function getProperties(): Promise<Property[]> {
-  const { data, error } = await supabaseAdmin.from('properties').select('*').order('property_name')
+  const { data, error } = await getSupabaseAdmin().from('properties').select('*').order('property_name')
   if (error) {
     console.error('Error fetching property details:', error.message)
     return []
