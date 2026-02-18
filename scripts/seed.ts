@@ -1,13 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
-import * as fs from 'fs'
-import * as path from 'path'
 import * as dotenv from 'dotenv'
+import fs from 'node:fs'
+import path from 'node:path'
 
-// Load .env.local
-dotenv.config({ path: path.join(__dirname, '..', '.env.local') })
+dotenv.config({ path: path.join(process.cwd(), '.env.local') })
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local')
@@ -17,24 +16,36 @@ if (!supabaseUrl || !supabaseServiceKey) {
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 async function seed() {
-  const dataPath = path.join(__dirname, '..', 'data', 'properties.json')
+  const dataPath = path.join(process.cwd(), 'data', 'properties.json')
   const properties = JSON.parse(fs.readFileSync(dataPath, 'utf-8'))
 
-  console.log(`Seeding ${properties.length} properties...`)
-
-  for (const property of properties) {
-    const { error } = await supabase
-      .from('properties')
-      .upsert(property, { onConflict: 'property_name' })
-
-    if (error) {
-      console.error(`Error seeding ${property.property_name}:`, error.message)
-    } else {
-      console.log(`  ✓ ${property.property_name}`)
-    }
+  if (!Array.isArray(properties)) {
+    throw new Error('properties.json must contain an array')
   }
 
-  console.log('\nDone!')
+  const validFields = [
+    'property_name','date_acquired','original_investment_thesis','owners_intent_10yr',
+    'general_notes','occupancy_rate','market_psf_rate','avg_psf_rate','leasing_strategy',
+    'vacancies','tenant_mix','renewals','risks','capex_budget','capex_outlook_summary','long_term_items'
+  ]
+  const cleaned = properties.map((p: Record<string, unknown>) =>
+    Object.fromEntries(Object.entries(p).filter(([k]) => validFields.includes(k)))
+  )
+
+  console.log(`Seeding ${cleaned.length} properties...`)
+
+  const { error } = await supabase.from('properties').upsert(cleaned, {
+    onConflict: 'property_name',
+  })
+
+  if (error) {
+    throw new Error(`Seed failed: ${error.message}`)
+  }
+
+  console.log('Seed complete.')
 }
 
-seed().catch(console.error)
+seed().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})

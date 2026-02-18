@@ -2,21 +2,23 @@ import Link from 'next/link'
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 min-h-screen bg-gray-900 border-r border-gray-800 flex flex-col">
-      <div className="p-6 border-b border-gray-800">
-        <div className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Anchor Investments</div>
-        <div className="text-white font-bold text-lg">Property Dashboard</div>
+    <aside className="hidden md:flex md:w-72 md:flex-col md:border-r md:border-slate-800 md:bg-slate-950">
+      <div className="border-b border-slate-800 px-6 py-8">
+        <p className="text-xs uppercase tracking-[0.22em] text-slate-400">Anchor Investments</p>
+        <h1 className="mt-3 text-xl font-semibold text-white">Property Portfolio</h1>
       </div>
-      <nav className="flex-1 p-4 space-y-1">
+
+      <nav className="flex-1 px-4 py-6">
         <Link
           href="/"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition-colors text-sm font-medium"
+          className="block rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-medium text-slate-100 transition hover:border-slate-500 hover:bg-slate-800"
         >
-          <span>🏢</span> Portfolio
+          Portfolio Overview
         </Link>
       </nav>
-      <div className="p-4 border-t border-gray-800 text-xs text-gray-600">
-        Anchor Investments © 2025
+
+      <div className="border-t border-slate-800 px-6 py-4 text-xs text-slate-500">
+        Anchor Investments
       </div>
     </aside>
   )

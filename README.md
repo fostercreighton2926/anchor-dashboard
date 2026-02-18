@@ -1,77 +1,64 @@
-# Anchor Investments - Property Dashboard
+# Anchor Investments Property Dashboard
 
-A Next.js + Supabase dashboard for managing the Anchor commercial real estate portfolio.
+Next.js 14 + Supabase dashboard for Anchor Investments, focused on portfolio-level visibility across 28 commercial real estate properties.
 
-## What It Is
+## What This App Includes
 
-- Portfolio overview with occupancy, CapEx, and renewal data for all 28 properties
-- Individual property pages with full detail: leasing strategy, tenant mix, CapEx schedule, investment notes
-- Built to grow: schema includes scaffolded tables for tenants, leases, and loans (Phase 2)
+- Portfolio overview with key metrics:
+  - total properties
+  - average occupancy
+  - count at 100% occupancy
+  - count below 80% occupancy
+- Property cards with occupancy status, first upcoming renewal, and next CapEx item
+- Property detail pages for each asset with sections for Overview, Leasing, CapEx, and Notes
+- Supabase schema for `properties` plus scaffold tables for `tenants`, `leases`, and `loans`
+
+## Prerequisites
+
+- Node.js 18+
+- Existing `.env.local` with Supabase credentials (already present in this project)
 
 ## Setup
 
-### 1. Environment Variables
-
-Create `.env.local` in the project root (already done if Jarvis set this up):
-
-```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-DATABASE_URL=postgresql://postgres:password@db.your-project.supabase.co:5432/postgres
+1. Install dependencies:
+```bash
+npm install
 ```
 
-### 2. Run the Database Migration
-
-In your Supabase project dashboard, go to SQL Editor and paste the contents of:
-```
+2. Run the SQL migration in Supabase SQL Editor:
+```sql
+-- use file contents from
 supabase/migrations/001_initial.sql
 ```
 
-Run it to create the tables.
-
-### 3. Seed the Database
-
+3. Seed portfolio data from `data/properties.json`:
 ```bash
 npm run seed
 ```
 
-This loads all 28 properties from `data/properties.json` into Supabase.
-
-### 4. Run the Dev Server
-
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-Open http://localhost:3000
+## Environment Variables
 
-## Deploy to Vercel
+This project expects these values in `.env.local`:
 
-1. Push the project to a GitHub repo
-2. Go to vercel.com and import the repo
-3. Add environment variables in the Vercel dashboard (same as `.env.local`)
-4. Deploy - Vercel auto-detects Next.js
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
 
-## Roadmap
+## Deployment (Vercel)
 
-### Phase 1 (current)
-- Portfolio overview dashboard
-- Individual property pages
-- Data from 2025 Annual Business Plans
+1. Push this repository to GitHub.
+2. Import the repository in Vercel.
+3. Add the same environment variables from `.env.local` in Vercel project settings.
+4. Deploy.
 
-### Phase 2 - Tenant Tracking
-- Tenant profiles with contacts
-- Lease records (suite, sq ft, PSF, dates, options)
-- Renewal calendar view
+## Future Roadmap
 
-### Phase 3 - Financial
-- Loan tracking (lender, balance, rate, maturity)
-- CapEx tracking vs actuals
-- NOI / cash flow summaries
-
-### Phase 4 - Operations
-- Document storage per property
-- Maintenance log
-- PM contact directory
-- Investor reporting
+- `tenants`: detailed tenant records, contacts, reporting views
+- `leases`: lease term tracking, option windows, renewal pipeline
+- `loans`: debt schedule monitoring and refinancing timeline
+- capex actuals vs budget and portfolio trend reporting

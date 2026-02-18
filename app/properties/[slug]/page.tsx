@@ -1,180 +1,158 @@
-import { supabaseAdmin } from '@/lib/supabase-server'
-import { Property, slugify, occupancyBadgeColor } from '@/lib/types'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { supabaseAdmin } from '@/lib/supabase-server'
+import { Property, occupancyBadge, slugify } from '@/lib/types'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
-async function getProperty(slug: string): Promise<Property | null> {
-  const { data, error } = await supabaseAdmin
-    .from('properties')
-    .select('*')
-    .order('property_name')
+async function getProperties(): Promise<Property[]> {
+  const { data, error } = await supabaseAdmin.from('properties').select('*').order('property_name')
+  if (error) {
+    console.error('Error fetching property details:', error.message)
+    return []
+  }
+  return data ?? []
+}
 
-  if (error || !data) return null
-  return data.find(p => slugify(p.property_name) === slug) || null
+async function getPropertyBySlug(slug: string): Promise<Property | null> {
+  const properties = await getProperties()
+  return properties.find((property) => slugify(property.property_name) === slug) ?? null
 }
 
 export async function generateStaticParams() {
-  const { data } = await supabaseAdmin.from('properties').select('property_name')
-  return (data || []).map(p => ({ slug: slugify(p.property_name) }))
+  const properties = await getProperties()
+  return properties.map((property) => ({ slug: slugify(property.property_name) }))
 }
 
-export default async function PropertyPage({ params }: { params: { slug: string } }) {
-  const property = await getProperty(params.slug)
+export default async function PropertyDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const property = await getPropertyBySlug(slug)
   if (!property) notFound()
 
-  const capexYears = property.capex_budget
-    ? Object.entries(property.capex_budget).sort(([a], [b]) => parseInt(a) - parseInt(b))
+  const capexItems = property.capex_budget
+    ? Object.entries(property.capex_budget).sort(([a], [b]) => Number.parseInt(a, 10) - Number.parseInt(b, 10))
     : []
 
   return (
-    <div className="p-8 max-w-5xl">
-      {/* Back */}
-      <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-6">
-        <span>←</span> Back to Portfolio
+    <div className="px-4 py-6 md:px-8 md:py-8">
+      <Link href="/" className="inline-flex items-center text-sm text-slate-300 transition hover:text-white">
+        Back to portfolio
       </Link>
 
-      {/* Header */}
-      <div className="flex items-start justify-between mb-8">
+      <header className="mt-4 mb-8 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{property.property_name}</h1>
-          {property.date_acquired && (
-            <p className="text-gray-500 mt-1">Acquired {property.date_acquired}</p>
-          )}
+          <h1 className="text-3xl font-semibold text-white">{property.property_name}</h1>
+          <p className="mt-2 text-sm text-slate-400">Date acquired: {property.date_acquired ?? 'Not provided'}</p>
         </div>
-        <span className={`text-sm font-semibold px-3 py-1.5 rounded-full ${occupancyBadgeColor(property.occupancy_rate)}`}>
-          {property.occupancy_rate || 'N/A'} Occupied
+        <span className={`w-fit rounded-full px-3 py-1.5 text-sm font-semibold ${occupancyBadge(property.occupancy_rate)}`}>
+          Occupancy: {property.occupancy_rate ?? 'N/A'}
         </span>
-      </div>
+      </header>
 
-      <div className="space-y-8">
-
-        {/* Overview */}
-        <section className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Overview</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+      <div className="space-y-5">
+        <section className="rounded-xl border border-slate-800 bg-slate-900/75 p-5">
+          <h2 className="text-lg font-semibold text-slate-100">Overview</h2>
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <div className="text-xs text-gray-400 uppercase tracking-wide font-medium">Occupancy</div>
-              <div className="text-gray-900 font-semibold mt-1">{property.occupancy_rate || 'N/A'}</div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Occupancy</p>
+              <p className="mt-1 text-slate-100">{property.occupancy_rate ?? 'N/A'}</p>
             </div>
             <div>
-              <div className="text-xs text-gray-400 uppercase tracking-wide font-medium">Market PSF</div>
-              <div className="text-gray-900 font-semibold mt-1">{property.market_psf_rate || 'N/A'}</div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Market PSF Rate</p>
+              <p className="mt-1 text-slate-100">{property.market_psf_rate ?? 'N/A'}</p>
             </div>
             <div>
-              <div className="text-xs text-gray-400 uppercase tracking-wide font-medium">Avg PSF (tenants)</div>
-              <div className="text-gray-900 font-semibold mt-1">{property.avg_psf_rate || 'N/A'}</div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Average PSF Rate</p>
+              <p className="mt-1 text-slate-100">{property.avg_psf_rate ?? 'N/A'}</p>
             </div>
           </div>
-          {property.risks && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-100 rounded-lg">
-              <div className="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">Risks</div>
-              <div className="text-sm text-red-800">{property.risks}</div>
-            </div>
-          )}
-        </section>
-
-        {/* Leasing */}
-        <section className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Leasing</h2>
-          <div className="space-y-4">
-            {property.leasing_strategy && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Strategy</div>
-                <div className="text-sm text-gray-700">{property.leasing_strategy}</div>
-              </div>
-            )}
-            {property.vacancies && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Vacancies</div>
-                <div className="text-sm text-gray-700">{property.vacancies}</div>
-              </div>
-            )}
-            {property.tenant_mix && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Tenant Mix</div>
-                <div className="text-sm text-gray-700">{property.tenant_mix}</div>
-              </div>
-            )}
-            {property.renewals && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-2">Upcoming Renewals</div>
-                <div className="space-y-1">
-                  {property.renewals.split('\n').filter(l => l.trim()).map((renewal, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
-                      {renewal.trim()}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+          <div className="mt-4">
+            <p className="text-xs uppercase tracking-wide text-slate-400">Risks</p>
+            <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.risks ?? 'Not provided'}</p>
           </div>
         </section>
 
-        {/* CapEx */}
-        <section className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Capital Expenditures</h2>
-          {capexYears.length > 0 && (
-            <div className="mb-4 overflow-x-auto">
-              <table className="w-full text-sm">
+        <section className="rounded-xl border border-slate-800 bg-slate-900/75 p-5">
+          <h2 className="text-lg font-semibold text-slate-100">Leasing</h2>
+          <div className="mt-4 space-y-4">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Leasing Strategy</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.leasing_strategy ?? 'Not provided'}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Tenant Mix</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.tenant_mix ?? 'Not provided'}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Vacancies</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.vacancies ?? 'Not provided'}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Renewals</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.renewals ?? 'Not provided'}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-xl border border-slate-800 bg-slate-900/75 p-5">
+          <h2 className="text-lg font-semibold text-slate-100">CapEx</h2>
+          {capexItems.length > 0 ? (
+            <div className="mt-4 overflow-x-auto">
+              <table className="min-w-full border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-gray-100">
-                    <th className="text-left text-xs text-gray-400 uppercase tracking-wide font-medium py-2 pr-4">Year</th>
-                    <th className="text-right text-xs text-gray-400 uppercase tracking-wide font-medium py-2">Budget</th>
+                  <tr className="border-b border-slate-700">
+                    <th className="py-2 text-left font-medium text-slate-400">Year</th>
+                    <th className="py-2 text-right font-medium text-slate-400">Budget</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {capexYears.map(([year, amount]) => (
-                    <tr key={year} className="border-b border-gray-50">
-                      <td className="py-2 pr-4 font-medium text-gray-700">{year}</td>
-                      <td className="py-2 text-right text-gray-900">{amount}</td>
+                  {capexItems.map(([year, amount]) => (
+                    <tr key={year} className="border-b border-slate-800">
+                      <td className="py-2 text-slate-200">{year}</td>
+                      <td className="py-2 text-right text-slate-200">{amount}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+          ) : (
+            <p className="mt-4 text-sm text-slate-400">No CapEx budget data provided.</p>
           )}
-          {property.capex_outlook_summary && (
-            <div className="mt-4">
-              <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Outlook</div>
-              <div className="text-sm text-gray-700 whitespace-pre-line">{property.capex_outlook_summary}</div>
-            </div>
-          )}
-          {property.long_term_items && (
-            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-100 rounded-lg">
-              <div className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1">Long-Term Items to Track</div>
-              <div className="text-sm text-yellow-800">{property.long_term_items}</div>
-            </div>
-          )}
-        </section>
-
-        {/* Notes */}
-        <section className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Notes & Strategy</h2>
-          <div className="space-y-5">
-            {property.original_investment_thesis && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Investment Thesis</div>
-                <div className="text-sm text-gray-700 leading-relaxed">{property.original_investment_thesis}</div>
-              </div>
-            )}
-            {property.owners_intent_10yr && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">Owner Intent (10-Year)</div>
-                <div className="text-sm text-gray-700 leading-relaxed">{property.owners_intent_10yr}</div>
-              </div>
-            )}
-            {property.general_notes && (
-              <div>
-                <div className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">General Notes</div>
-                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{property.general_notes}</div>
-              </div>
-            )}
+          <div className="mt-4">
+            <p className="text-xs uppercase tracking-wide text-slate-400">CapEx Outlook Summary</p>
+            <p className="mt-1 whitespace-pre-line text-sm text-slate-200">
+              {property.capex_outlook_summary ?? 'Not provided'}
+            </p>
+          </div>
+          <div className="mt-4">
+            <p className="text-xs uppercase tracking-wide text-slate-400">Long-Term Items</p>
+            <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.long_term_items ?? 'Not provided'}</p>
           </div>
         </section>
 
+        <section className="rounded-xl border border-slate-800 bg-slate-900/75 p-5">
+          <h2 className="text-lg font-semibold text-slate-100">Notes</h2>
+          <div className="mt-4 space-y-4">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Original Investment Thesis</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">
+                {property.original_investment_thesis ?? 'Not provided'}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Owner&apos;s Intent (10 Year)</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.owners_intent_10yr ?? 'Not provided'}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400">General Notes</p>
+              <p className="mt-1 whitespace-pre-line text-sm text-slate-200">{property.general_notes ?? 'Not provided'}</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )

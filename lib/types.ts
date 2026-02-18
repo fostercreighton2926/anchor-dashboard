@@ -21,40 +21,73 @@ export interface Property {
 }
 
 export function slugify(name: string): string {
-  return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+  return name
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
 }
 
-export function parseOccupancy(rate: string | null): number {
-  if (!rate) return 0
-  return parseFloat(rate.replace('%', '')) || 0
+export function parseOccupancy(rate: string | null): number | null {
+  if (!rate) return null
+  const cleaned = rate.replace('%', '').trim()
+  const value = Number.parseFloat(cleaned)
+  return Number.isFinite(value) ? value : null
 }
 
-export function occupancyColor(rate: string | null): string {
+export function occupancyBadge(rate: string | null): string {
   const pct = parseOccupancy(rate)
-  if (pct >= 100) return 'text-green-400'
-  if (pct >= 80) return 'text-yellow-400'
-  return 'text-red-400'
+  if (pct === null) return 'bg-slate-700 text-slate-200 border border-slate-600'
+  if (pct >= 100) return 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
+  if (pct >= 80) return 'bg-amber-500/20 text-amber-300 border border-amber-400/40'
+  return 'bg-rose-500/20 text-rose-300 border border-rose-400/40'
 }
 
-export function occupancyBadgeColor(rate: string | null): string {
-  const pct = parseOccupancy(rate)
-  if (pct >= 100) return 'bg-green-900 text-green-300'
-  if (pct >= 80) return 'bg-yellow-900 text-yellow-300'
-  return 'bg-red-900 text-red-300'
-}
-
-export function nextCapex(budget: Record<string, string> | null): { year: string; amount: string } | null {
+export function nextCapex(
+  budget: Record<string, string> | null
+): { year: string; amount: string } | null {
   if (!budget) return null
   const currentYear = new Date().getFullYear()
-  const futureYears = Object.keys(budget)
-    .filter(y => parseInt(y) >= currentYear)
-    .sort()
-  if (!futureYears.length) return null
-  return { year: futureYears[0], amount: budget[futureYears[0]] }
+  const nextYear = Object.keys(budget)
+    .map((year) => Number.parseInt(year, 10))
+    .filter((year) => Number.isFinite(year) && year >= currentYear)
+    .sort((a, b) => a - b)[0]
+
+  if (!nextYear) return null
+  return { year: String(nextYear), amount: budget[String(nextYear)] ?? 'N/A' }
 }
 
-export function firstRenewal(renewals: string | null): string | null {
+function extractDateFromText(input: string): Date | null {
+  const match = input.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/)
+  if (!match) return null
+
+  const month = Number.parseInt(match[1], 10)
+  const day = Number.parseInt(match[2], 10)
+  const yearRaw = Number.parseInt(match[3], 10)
+  const year = yearRaw < 100 ? 2000 + yearRaw : yearRaw
+
+  const parsed = new Date(year, month - 1, day)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+export function firstUpcomingRenewal(renewals: string | null): string | null {
   if (!renewals) return null
-  const lines = renewals.split('\n').filter(l => l.trim())
-  return lines[0] || null
+
+  const lines = renewals
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  if (!lines.length) return null
+
+  const now = new Date()
+  const dated = lines
+    .map((line) => ({ line, date: extractDateFromText(line) }))
+    .filter((entry): entry is { line: string; date: Date } => entry.date !== null)
+    .sort((a, b) => a.date.getTime() - b.date.getTime())
+
+  const upcoming = dated.find((entry) => entry.date >= now)
+  if (upcoming) return upcoming.line
+
+  return dated[0]?.line ?? lines[0]
 }
