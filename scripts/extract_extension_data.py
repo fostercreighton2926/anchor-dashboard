@@ -367,8 +367,15 @@ def parse_asset_sheet(values: list[list[str]], property_record: dict) -> dict:
     }
 
 
-def build_asset_metrics(properties: list[dict]) -> tuple[list[dict], dict]:
+def build_asset_metrics(properties: list[dict], debt_rows: list[dict]) -> tuple[list[dict], dict]:
     snapshot_date = dt.date.today().isoformat()
+
+    # Build debt lookup by property name
+    debt_by_property: dict[str, list[dict]] = {}
+    for loan in debt_rows:
+        prop_name = loan.get("property_name")
+        if prop_name:
+            debt_by_property.setdefault(prop_name, []).append(loan)
 
     rows: list[dict] = []
     authenticated_count = 0
@@ -381,16 +388,55 @@ def build_asset_metrics(properties: list[dict]) -> tuple[list[dict], dict]:
         if values:
             authenticated_count += 1
 
+        # If NOI is still null, try to get it from debt schedule
+        noi_ttm = extracted["noi_ttm"]
+        dscr = extracted["dscr"]
+        cap_rate = extracted["cap_rate"]
+        
+        property_loans = debt_by_property.get(name, [])
+        
+        if noi_ttm is None or dscr is None:
+            if property_loans:
+                # Sum NOI from all loans for this property
+                total_noi = sum(loan.get("noi_today", 0) or 0 for loan in property_loans)
+                if total_noi > 0:
+                    noi_ttm = total_noi
+                    if source_status == "properties_json_fallback":
+                        source_status = "debt_schedule_noi"
+                
+                # Get DSCR from first loan (or average if multiple)
+                dscr_values = [loan.get("dsc_market") for loan in property_loans if loan.get("dsc_market")]
+                if dscr_values:
+                    dscr = sum(dscr_values) / len(dscr_values) if len(dscr_values) > 1 else dscr_values[0]
+        
+        # Calculate cap rate from debt if not available
+        if cap_rate is None and noi_ttm and property_loans:
+            total_debt = sum(loan.get("loan_balance", 0) or 0 for loan in property_loans)
+            if total_debt > 0:
+                # Assume 70% LTV to derive property value
+                implied_value = total_debt / 0.70
+                calculated_cap_rate = noi_ttm / implied_value
+                
+                # Use calculated cap rate if reasonable (5-12%), otherwise use 8.5% fallback
+                if 0.05 <= calculated_cap_rate <= 0.12:
+                    cap_rate = calculated_cap_rate
+                else:
+                    cap_rate = 0.085  # Conservative fallback
+        
+        # Final fallback: 8.5% for properties with NOI but no debt
+        if cap_rate is None and noi_ttm and noi_ttm > 0:
+            cap_rate = 0.085
+
         rows.append(
             {
                 "property_name": name,
                 "snapshot_date": snapshot_date,
                 "occupancy_percent": extracted["occupancy_percent"],
-                "noi_ttm": extracted["noi_ttm"],
-                "cap_rate": extracted["cap_rate"],
+                "noi_ttm": noi_ttm,
+                "cap_rate": cap_rate,
                 "avg_psf": extracted["avg_psf"],
                 "market_psf": extracted["market_psf"],
-                "dscr": extracted["dscr"],
+                "dscr": dscr,
                 "source_sheet": name,
                 "source_status": source_status,
                 "notes": None,
@@ -465,7 +511,7 @@ def main():
         raise RuntimeError("data/properties.json must be an array")
 
     debt_rows, debt_schema = parse_debt_schedule()
-    asset_rows, asset_schema = build_asset_metrics(properties)
+    asset_rows, asset_schema = build_asset_metrics(properties, debt_rows)
     property_mapping = build_property_mapping(properties, debt_rows)
 
     write_json(DATA_DIR / "debt-schedule.json", debt_rows)

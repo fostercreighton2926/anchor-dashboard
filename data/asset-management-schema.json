@@ -53,7 +53,7 @@
   ],
   "stats": {
     "properties": 28,
-    "google_sheet_extracted": 0,
-    "fallback_count": 28
+    "google_sheet_extracted": 24,
+    "fallback_count": 4
   }
 }
