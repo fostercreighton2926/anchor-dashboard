@@ -11,20 +11,22 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="font-sans bg-anchor-cream text-anchor-body">
+      <body className="font-sans">
         <div className="min-h-screen md:flex">
           <Sidebar />
           <main className="flex-1">
-            <header className="border-b border-anchor-border bg-white px-4 py-4 md:hidden">
-              <Image
-                src="/anchor-logo.jpg"
-                alt="Anchor Investments"
-                width={220}
-                height={44}
-                className="h-auto w-auto max-w-[220px]"
-                priority
-              />
-              <p className="mt-2 text-sm font-heading text-anchor-text">Portfolio Command Center</p>
+            <header className="border-b border-slate-800 bg-slate-950/80 px-4 py-4 backdrop-blur md:hidden">
+              <div className="h-8 w-36 overflow-hidden">
+                <Image
+                  src="/anchor-logo.jpg"
+                  alt="Anchor Investments"
+                  width={200}
+                  height={40}
+                  className="-ml-1 h-8 w-auto max-w-none"
+                  priority
+                />
+              </div>
+              <p className="mt-1 text-base font-semibold text-white">Portfolio Command Center</p>
             </header>
             {children}
           </main>

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Image from "next/image";
 import { operationalDashboardProperties as properties } from "@/lib/operationalDashboardData";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend, LineChart, Line, ReferenceLine } from "recharts";
 
-const statusColors = { Trophy:"#7A9A8A", WIP:"#eab308", Problem:"#dc2626" };
+const statusColors = { Trophy:"#16a34a", WIP:"#eab308", Problem:"#dc2626" };
 const statusLabels = { Trophy:"Trophy Asset 🟢", WIP:"Work in Progress 🟡", Problem:"Problem Child 🔴" };
 
 const fmt = (n) => {
@@ -20,10 +19,10 @@ const pct = (n) => (n * 100).toFixed(0) + "%";
 
 // ─── COMPONENTS ─────────────────────────────────────────────────────
 const KPICard = ({ label, value, sub, accent }) => (
-  <div style={{ background:"rgba(122,154,138,0.08)", border:"1px solid rgba(122,154,138,0.24)", borderRadius:12, padding:"20px 24px", flex:1, minWidth:180 }}>
-    <div style={{ fontSize:12, fontWeight:500, color:"#6b7280", letterSpacing:"0.05em", textTransform:"uppercase", marginBottom:6 }}>{label}</div>
-    <div style={{ fontSize:28, fontWeight:700, color: accent || "#000000", fontFamily:"'Helvetica Neue', Arial, sans-serif" }}>{value}</div>
-    {sub && <div style={{ fontSize:12, color:"#6b7280", marginTop:4 }}>{sub}</div>}
+  <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", borderRadius:12, padding:"20px 24px", flex:1, minWidth:180 }}>
+    <div style={{ fontSize:12, fontWeight:500, color:"#94a3b8", letterSpacing:"0.05em", textTransform:"uppercase", marginBottom:6 }}>{label}</div>
+    <div style={{ fontSize:28, fontWeight:700, color: accent || "#f1f5f9", fontFamily:"'DM Sans', sans-serif" }}>{value}</div>
+    {sub && <div style={{ fontSize:12, color:"#64748b", marginTop:4 }}>{sub}</div>}
   </div>
 );
 
@@ -44,7 +43,7 @@ const MaturityFlag = ({ maturity }) => {
   if (months <= 0) return <span style={{ color:"#ef4444", fontWeight:700, fontSize:11 }}>⚠ TODAY</span>;
   if (months <= 6) return <span style={{ color:"#f97316", fontWeight:600, fontSize:11 }}>⚠ {months}mo</span>;
   if (months <= 12) return <span style={{ color:"#eab308", fontSize:11 }}>{months}mo</span>;
-  return <span style={{ color:"#6b7280", fontSize:11 }}>{months}mo</span>;
+  return <span style={{ color:"#64748b", fontSize:11 }}>{months}mo</span>;
 };
 
 const valuations = [
@@ -118,7 +117,7 @@ export default function PortfolioDashboard() {
   }, []);
 
   const pieData = [
-    { name:"Trophy Assets", value: totals.trophy, color:"#7A9A8A" },
+    { name:"Trophy Assets", value: totals.trophy, color:"#16a34a" },
     { name:"Work in Progress", value: totals.wip, color:"#eab308" },
     { name:"Problem Children", value: totals.problem, color:"#dc2626" },
   ];
@@ -138,7 +137,7 @@ export default function PortfolioDashboard() {
 
   const dscData = [...properties].filter(p=>p.debtService>0).sort((a,b)=>a.dsc-b.dsc).map(p=>({
     name: p.name, dsc: p.dsc,
-    fill: p.dsc < 0.5 ? "#dc2626" : p.dsc < 1.0 ? "#f97316" : p.dsc < 1.25 ? "#eab308" : "#7A9A8A"
+    fill: p.dsc < 0.5 ? "#dc2626" : p.dsc < 1.0 ? "#f97316" : p.dsc < 1.25 ? "#eab308" : "#16a34a"
   }));
 
   const refiOpps = properties.filter(p => {
@@ -158,18 +157,19 @@ export default function PortfolioDashboard() {
   const prop = selectedProp ? properties.find(p => p.name === selectedProp) : null;
 
   return (
-    <div style={{ background:"#f8f6f1", minHeight:"100vh", color:"#374151", fontFamily:"'Helvetica Neue', Arial, sans-serif" }}>
+    <div style={{ background:"#0c0f1a", minHeight:"100vh", color:"#e2e8f0", fontFamily:"'DM Sans', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+
       {/* ── HEADER ── */}
-      <div style={{ background:"linear-gradient(135deg, #f8f6f1 0%, #eef3ef 50%, #f8f6f1 100%)", borderBottom:"1px solid rgba(122,154,138,0.18)", padding:"28px 40px 20px" }}>
+      <div style={{ background:"linear-gradient(135deg, #5f786a 0%, #7A9A8A 52%, #9cb4a8 100%)", borderBottom:"1px solid rgba(122,154,138,0.45)", padding:"28px 40px 20px" }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20 }}>
           <div>
-            <Image src="/anchor-logo.jpg" alt="Anchor Investments" width={260} height={52} style={{ width:260, maxWidth:"100%", height:"auto", display:"block", marginBottom:10 }} />
-            <h1 style={{ fontSize:32, fontWeight:700, margin:0, fontFamily:"'Times New Roman', Georgia, serif", color:"#000000" }}>Portfolio Dashboard</h1>
-            <div style={{ fontSize:13, color:"#6b7280", marginTop:4 }}>2026 Strategic Overview · {properties.length} Properties · As of February 18, 2026</div>
+            <h1 style={{ fontSize:32, fontWeight:700, margin:0, fontFamily:"'Playfair Display', serif", color:"#f8fafc" }}>Portfolio Dashboard</h1>
+            <div style={{ fontSize:13, color:"#64748b", marginTop:4 }}>2026 Strategic Overview · {properties.length} Properties · As of February 18, 2026</div>
           </div>
           <div style={{ textAlign:"right" }}>
-            <div style={{ fontSize:11, color:"#6b7280" }}>PRIME: 6.75% · SOFR (30D): 3.65%</div>
-            <div style={{ fontSize:11, color:"#6b7280", marginTop:2 }}>Prepared for CEO Review</div>
+            <div style={{ fontSize:11, color:"#64748b" }}>PRIME: 6.75% · SOFR (30D): 3.65%</div>
+            <div style={{ fontSize:11, color:"#64748b", marginTop:2 }}>Prepared for CEO Review</div>
           </div>
         </div>
 
@@ -179,8 +179,8 @@ export default function PortfolioDashboard() {
             <button key={n.id} onClick={() => { setView(n.id); setSelectedProp(null); }}
               style={{
                 padding:"8px 20px", borderRadius:8, border:"none", cursor:"pointer", fontSize:13, fontWeight:600,
-                background: view === n.id ? "rgba(122,154,138,0.16)" : "transparent",
-                color: view === n.id ? "#5E7B6D" : "#6b7280",
+                background: view === n.id ? "rgba(99,102,241,0.2)" : "transparent",
+                color: view === n.id ? "#a5b4fc" : "#64748b",
                 transition:"all 0.2s"
               }}>
               {n.label}
@@ -197,100 +197,100 @@ export default function PortfolioDashboard() {
             {/* KPI Row */}
             <div style={{ display:"flex", gap:16, flexWrap:"wrap", marginBottom:28 }}>
               <KPICard label="Total Loan Balance" value={fmt(totals.loanBal)} sub={`${properties.length} loans across 20+ lenders`} />
-              <KPICard label="Wtd Avg DSCR" value={totals.avgDsc + "x"} accent={parseFloat(totals.avgDsc) < 1.2 ? "#f97316" : "#7A9A8A"} sub="NOI ÷ Debt Service (portfolio weighted)" />
-              <KPICard label="2026 Projected Cash Flow" value={fmtFull(totals.cf2026)} accent={totals.cf2026 > 0 ? "#7A9A8A" : "#dc2626"} sub="All properties combined" />
+              <KPICard label="Wtd Avg DSCR" value={totals.avgDsc + "x"} accent={parseFloat(totals.avgDsc) < 1.2 ? "#f97316" : "#16a34a"} sub="NOI ÷ Debt Service (portfolio weighted)" />
+              <KPICard label="2026 Projected Cash Flow" value={fmtFull(totals.cf2026)} accent={totals.cf2026 > 0 ? "#16a34a" : "#dc2626"} sub="All properties combined" />
               <KPICard label="Avg Occupancy" value={totals.avgOcc + "%"} sub={totals.lowestOcc.map(p => `${p.name} ${p.occupancy}%`).join(" · ")} />
             </div>
 
             {/* Detail Breakdowns */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:28 }}>
               {/* 2025 Distributions */}
-              <div style={{ background:"rgba(122,154,138,0.08)", border:"1px solid rgba(122,154,138,0.22)", borderRadius:14, padding:20 }}>
-                <div style={{ fontSize:12, fontWeight:600, color:"#5E7B6D", letterSpacing:"0.05em", textTransform:"uppercase", marginBottom:4 }}>Total 2025 Distributions</div>
-                <div style={{ fontSize:26, fontWeight:700, color:"#5E7B6D", fontFamily:"'Helvetica Neue', Arial, sans-serif", marginBottom:12 }}>$7,942,500</div>
+              <div style={{ background:"rgba(165,180,252,0.05)", border:"1px solid rgba(165,180,252,0.12)", borderRadius:14, padding:20 }}>
+                <div style={{ fontSize:12, fontWeight:600, color:"#a5b4fc", letterSpacing:"0.05em", textTransform:"uppercase", marginBottom:4 }}>Total 2025 Distributions</div>
+                <div style={{ fontSize:26, fontWeight:700, color:"#a5b4fc", fontFamily:"'DM Sans', sans-serif", marginBottom:12 }}>$7,942,500</div>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:4 }}>
                   {[...properties].filter(p=>p.distros2025>0).sort((a,b)=>b.distros2025-a.distros2025).map(p => (
                     <div key={p.name} style={{ display:"flex", justifyContent:"space-between", padding:"4px 8px", fontSize:12 }}>
-                      <span style={{ color:"#6b7280" }}>{p.name}</span>
-                      <span style={{ color:"#111827", fontWeight:600 }}>{fmt(p.distros2025)}</span>
+                      <span style={{ color:"#94a3b8" }}>{p.name}</span>
+                      <span style={{ color:"#cbd5e1", fontWeight:600 }}>{fmt(p.distros2025)}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Draw Dollars */}
-              <div style={{ background:"rgba(122,154,138,0.08)", border:"1px solid rgba(122,154,138,0.22)", borderRadius:14, padding:20 }}>
-                <div style={{ fontSize:12, fontWeight:600, color:"#7A9A8A", letterSpacing:"0.05em", textTransform:"uppercase", marginBottom:4 }}>Draw Dollars Available</div>
-                <div style={{ fontSize:26, fontWeight:700, color:"#7A9A8A", fontFamily:"'Helvetica Neue', Arial, sans-serif", marginBottom:12 }}>{fmt(totals.drawAvail)}</div>
+              <div style={{ background:"rgba(34,211,238,0.05)", border:"1px solid rgba(34,211,238,0.12)", borderRadius:14, padding:20 }}>
+                <div style={{ fontSize:12, fontWeight:600, color:"#22d3ee", letterSpacing:"0.05em", textTransform:"uppercase", marginBottom:4 }}>Draw Dollars Available</div>
+                <div style={{ fontSize:26, fontWeight:700, color:"#22d3ee", fontFamily:"'DM Sans', sans-serif", marginBottom:12 }}>{fmt(totals.drawAvail)}</div>
                 {totals.drawProps.map(p => (
-                  <div key={p.name} style={{ display:"flex", justifyContent:"space-between", padding:"6px 8px", borderBottom:"1px solid rgba(122,154,138,0.08)", fontSize:13 }}>
+                  <div key={p.name} style={{ display:"flex", justifyContent:"space-between", padding:"6px 8px", borderBottom:"1px solid rgba(255,255,255,0.04)", fontSize:13 }}>
                     <div>
-                      <span style={{ color:"#374151", fontWeight:600 }}>{p.name}</span>
-                      <span style={{ color:"#6b7280", fontSize:11, marginLeft:8 }}>{p.city}</span>
+                      <span style={{ color:"#e2e8f0", fontWeight:600 }}>{p.name}</span>
+                      <span style={{ color:"#64748b", fontSize:11, marginLeft:8 }}>{p.city}</span>
                     </div>
-                    <span style={{ color:"#7A9A8A", fontWeight:700 }}>{fmtFull(p.drawAvail)}</span>
+                    <span style={{ color:"#22d3ee", fontWeight:700 }}>{fmtFull(p.drawAvail)}</span>
                   </div>
                 ))}
-                <div style={{ fontSize:11, color:"#6b7280", marginTop:8 }}>Note: Draw dollars are part of loan principal balance</div>
+                <div style={{ fontSize:11, color:"#64748b", marginTop:8 }}>Note: Draw dollars are part of loan principal balance</div>
               </div>
             </div>
 
             {/* Charts Row */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20, marginBottom:28 }}>
               {/* Pie */}
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#111827" }}>Portfolio Composition</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#cbd5e1" }}>Portfolio Composition</div>
                 <ResponsiveContainer width="100%" height={220}>
                   <PieChart>
                     <Pie data={pieData} cx="50%" cy="50%" innerRadius={55} outerRadius={85} dataKey="value" stroke="none">
                       {pieData.map((e, i) => <Cell key={i} fill={e.color} />)}
                     </Pie>
-                    <Tooltip contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:8, fontSize:13 }} />
+                    <Tooltip contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:8, fontSize:13 }} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div style={{ display:"flex", justifyContent:"center", gap:16, marginTop:8 }}>
                   {pieData.map(d => (
                     <div key={d.name} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12 }}>
                       <div style={{ width:10, height:10, borderRadius:3, background:d.color }} />
-                      <span style={{ color:"#6b7280" }}>{d.name} ({d.value})</span>
+                      <span style={{ color:"#94a3b8" }}>{d.name} ({d.value})</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* CF by Status */}
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#111827" }}>2026 Cash Flow by Category</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#cbd5e1" }}>2026 Cash Flow by Category</div>
                 <ResponsiveContainer width="100%" height={250}>
                   <BarChart data={cfByStatus} margin={{ top:10, right:10, left:10, bottom:10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
-                    <XAxis dataKey="name" tick={{ fill:"#6b7280", fontSize:12 }} axisLine={false} />
-                    <YAxis tick={{ fill:"#6b7280", fontSize:11 }} axisLine={false} tickFormatter={v => fmt(v)} />
-                    <Tooltip contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:8, fontSize:13 }} formatter={v => fmtFull(v)} />
-                    <ReferenceLine y={0} stroke="#9CA3AF" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="name" tick={{ fill:"#94a3b8", fontSize:12 }} axisLine={false} />
+                    <YAxis tick={{ fill:"#94a3b8", fontSize:11 }} axisLine={false} tickFormatter={v => fmt(v)} />
+                    <Tooltip contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:8, fontSize:13 }} formatter={v => fmtFull(v)} />
+                    <ReferenceLine y={0} stroke="#475569" />
                     <Bar dataKey="cf" radius={[6,6,0,0]}>
-                      {cfByStatus.map((e,i) => <Cell key={i} fill={e.cf >= 0 ? "#7A9A8A" : "#dc2626"} />)}
+                      {cfByStatus.map((e,i) => <Cell key={i} fill={e.cf >= 0 ? "#16a34a" : "#dc2626"} />)}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
               {/* 2026 Maturities */}
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#111827" }}>2026 Loan Maturities & Resets</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#cbd5e1" }}>2026 Loan Maturities & Resets</div>
                 <div style={{ maxHeight:260, overflow:"auto" }}>
                   {maturities2026.map(p => (
                     <div key={p.name} onClick={() => setSelectedProp(p.name)}
-                      style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"8px 12px", borderRadius:8, cursor:"pointer", borderBottom:"1px solid rgba(122,154,138,0.08)", transition:"background 0.15s" }}
-                      onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.12)"}
+                      style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"8px 12px", borderRadius:8, cursor:"pointer", borderBottom:"1px solid rgba(255,255,255,0.04)", transition:"background 0.15s" }}
+                      onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.05)"}
                       onMouseOut={e => e.currentTarget.style.background="transparent"}>
                       <div>
-                        <div style={{ fontSize:13, fontWeight:600, color:"#374151" }}>{p.name}</div>
-                        <div style={{ fontSize:11, color:"#6b7280" }}>{p.rateReset}</div>
+                        <div style={{ fontSize:13, fontWeight:600, color:"#e2e8f0" }}>{p.name}</div>
+                        <div style={{ fontSize:11, color:"#64748b" }}>{p.rateReset}</div>
                       </div>
                       <div style={{ textAlign:"right" }}>
                         <div style={{ fontSize:12, fontWeight:600 }}>{p.maturity}</div>
-                        <div style={{ fontSize:11, color:"#6b7280" }}>{fmt(p.loanBal)}</div>
+                        <div style={{ fontSize:11, color:"#94a3b8" }}>{fmt(p.loanBal)}</div>
                       </div>
                     </div>
                   ))}
@@ -301,17 +301,17 @@ export default function PortfolioDashboard() {
             {/* Top/Bottom Properties */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
               <div style={{ background:"rgba(22,163,106,0.05)", border:"1px solid rgba(22,163,106,0.15)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#7A9A8A" }}>Top Performers — 2026 Projected CF</div>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#4ade80" }}>Top Performers — 2026 Projected CF</div>
                 {[...properties].sort((a,b)=>b.cf2026-a.cf2026).slice(0,7).map(p => (
                   <div key={p.name} onClick={() => setSelectedProp(p.name)}
-                    style={{ display:"flex", justifyContent:"space-between", padding:"7px 12px", borderRadius:6, cursor:"pointer", borderBottom:"1px solid rgba(255,255,255,0.95)" }}
-                    onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.08)"}
+                    style={{ display:"flex", justifyContent:"space-between", padding:"7px 12px", borderRadius:6, cursor:"pointer", borderBottom:"1px solid rgba(255,255,255,0.03)" }}
+                    onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                     onMouseOut={e => e.currentTarget.style.background="transparent"}>
                     <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                       <StatusBadge status={p.status} />
                       <span style={{ fontSize:13, fontWeight:500 }}>{p.name}</span>
                     </div>
-                    <span style={{ fontSize:13, fontWeight:700, color:"#7A9A8A" }}>{fmtFull(p.cf2026)}</span>
+                    <span style={{ fontSize:13, fontWeight:700, color:"#4ade80" }}>{fmtFull(p.cf2026)}</span>
                   </div>
                 ))}
               </div>
@@ -319,8 +319,8 @@ export default function PortfolioDashboard() {
                 <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#f87171" }}>Biggest Cash Burns — 2026 Projected CF</div>
                 {[...properties].sort((a,b)=>a.cf2026-b.cf2026).slice(0,7).map(p => (
                   <div key={p.name} onClick={() => setSelectedProp(p.name)}
-                    style={{ display:"flex", justifyContent:"space-between", padding:"7px 12px", borderRadius:6, cursor:"pointer", borderBottom:"1px solid rgba(255,255,255,0.95)" }}
-                    onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.08)"}
+                    style={{ display:"flex", justifyContent:"space-between", padding:"7px 12px", borderRadius:6, cursor:"pointer", borderBottom:"1px solid rgba(255,255,255,0.03)" }}
+                    onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                     onMouseOut={e => e.currentTarget.style.background="transparent"}>
                     <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                       <StatusBadge status={p.status} />
@@ -337,19 +337,19 @@ export default function PortfolioDashboard() {
         {/* ════════════════════ PROPERTY DETAIL ════════════════════ */}
         {selectedProp && prop && (
           <div>
-            <button onClick={() => setSelectedProp(null)} style={{ background:"rgba(122,154,138,0.16)", color:"#5E7B6D", border:"none", borderRadius:8, padding:"8px 16px", cursor:"pointer", fontSize:13, fontWeight:600, marginBottom:20 }}>
+            <button onClick={() => setSelectedProp(null)} style={{ background:"rgba(99,102,241,0.15)", color:"#a5b4fc", border:"none", borderRadius:8, padding:"8px 16px", cursor:"pointer", fontSize:13, fontWeight:600, marginBottom:20 }}>
               ← Back to {view === "overview" ? "Overview" : view === "properties" ? "Properties" : view === "debt" ? "Debt" : view === "cashflow" ? "Cash Flow" : "Refi"}
             </button>
             <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
-              <h2 style={{ fontSize:28, fontWeight:700, margin:0, fontFamily:"'Times New Roman', Georgia, serif" }}>{prop.name}</h2>
+              <h2 style={{ fontSize:28, fontWeight:700, margin:0, fontFamily:"'Playfair Display', serif" }}>{prop.name}</h2>
               <StatusBadge status={prop.status} />
-              <span style={{ fontSize:13, color:"#6b7280" }}>{prop.city}</span>
+              <span style={{ fontSize:13, color:"#64748b" }}>{prop.city}</span>
             </div>
 
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
-              <KPICard label="Occupancy" value={prop.occupancy < 0 ? "N/A" : prop.occupancy + "%"} accent={prop.occupancy < 0 ? "#6b7280" : prop.occupancy < 70 ? "#dc2626" : prop.occupancy < 90 ? "#eab308" : "#7A9A8A"} />
-              <KPICard label="2026 Cash Flow" value={fmtFull(prop.cf2026)} accent={prop.cf2026 >= 0 ? "#7A9A8A" : "#dc2626"} />
-              <KPICard label="DSC" value={prop.dsc.toFixed(2) + "x"} accent={prop.dsc < 1 ? "#dc2626" : prop.dsc < 1.25 ? "#eab308" : "#7A9A8A"} />
+              <KPICard label="Occupancy" value={prop.occupancy < 0 ? "N/A" : prop.occupancy + "%"} accent={prop.occupancy < 0 ? "#94a3b8" : prop.occupancy < 70 ? "#dc2626" : prop.occupancy < 90 ? "#eab308" : "#16a34a"} />
+              <KPICard label="2026 Cash Flow" value={fmtFull(prop.cf2026)} accent={prop.cf2026 >= 0 ? "#16a34a" : "#dc2626"} />
+              <KPICard label="DSC" value={prop.dsc.toFixed(2) + "x"} accent={prop.dsc < 1 ? "#dc2626" : prop.dsc < 1.25 ? "#eab308" : "#16a34a"} />
               <KPICard label="Loan Balance" value={fmtFull(prop.loanBal)} sub={`${prop.rate}% ${prop.rateType}`} />
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
@@ -360,8 +360,8 @@ export default function PortfolioDashboard() {
             </div>
 
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:24 }}>
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#111827" }}>Property Details</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#cbd5e1" }}>Property Details</div>
                 {[
                   ["Square Footage", prop.sqft > 0 ? prop.sqft.toLocaleString() + " SF" : "N/A"],
                   ["Investors", prop.investors],
@@ -371,15 +371,15 @@ export default function PortfolioDashboard() {
                   ["Rate Reset", prop.rateReset],
                   ["Key Tenants", prop.tenant],
                 ].map(([k,v]) => (
-                  <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid rgba(122,154,138,0.08)" }}>
-                    <span style={{ fontSize:13, color:"#6b7280" }}>{k}</span>
-                    <span style={{ fontSize:13, fontWeight:500, color:"#374151", textAlign:"right", maxWidth:"60%" }}>{v}</span>
+                  <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid rgba(255,255,255,0.04)" }}>
+                    <span style={{ fontSize:13, color:"#94a3b8" }}>{k}</span>
+                    <span style={{ fontSize:13, fontWeight:500, color:"#e2e8f0", textAlign:"right", maxWidth:"60%" }}>{v}</span>
                   </div>
                 ))}
               </div>
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#111827" }}>2026 Strategy & Risks</div>
-                <div style={{ fontSize:13, color:"#374151", lineHeight:1.7, marginBottom:16 }}>{prop.strategy}</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#cbd5e1" }}>2026 Strategy & Risks</div>
+                <div style={{ fontSize:13, color:"#e2e8f0", lineHeight:1.7, marginBottom:16 }}>{prop.strategy}</div>
                 <div style={{ fontSize:14, fontWeight:600, marginBottom:8, color:"#f87171" }}>Key Risks</div>
                 <div style={{ fontSize:13, color:"#fca5a5", lineHeight:1.7 }}>{prop.risks}</div>
               </div>
@@ -391,31 +391,31 @@ export default function PortfolioDashboard() {
         {view === "properties" && !selectedProp && (
           <div>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20 }}>
-              <h2 style={{ fontSize:22, fontWeight:700, margin:0, fontFamily:"'Times New Roman', Georgia, serif" }}>All Properties</h2>
+              <h2 style={{ fontSize:22, fontWeight:700, margin:0, fontFamily:"'Playfair Display', serif" }}>All Properties</h2>
               <div style={{ display:"flex", gap:8 }}>
                 {["All","Trophy","WIP","Problem"].map(s => (
                   <button key={s} onClick={() => setStatusFilter(s)}
                     style={{
                       padding:"6px 16px", borderRadius:8, border:"1px solid", cursor:"pointer", fontSize:12, fontWeight:600,
-                      background: statusFilter === s ? "rgba(122,154,138,0.16)" : "transparent",
-                      color: statusFilter === s ? "#5E7B6D" : "#6b7280",
-                      borderColor: statusFilter === s ? "rgba(122,154,138,0.3)" : "rgba(122,154,138,0.24)"
+                      background: statusFilter === s ? "rgba(99,102,241,0.2)" : "transparent",
+                      color: statusFilter === s ? "#a5b4fc" : "#64748b",
+                      borderColor: statusFilter === s ? "rgba(99,102,241,0.3)" : "rgba(255,255,255,0.08)"
                     }}>
                     {s} {s !== "All" && `(${properties.filter(p => p.status === s).length})`}
                   </button>
                 ))}
               </div>
             </div>
-            <div style={{ background:"rgba(255,255,255,0.92)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, overflow:"hidden" }}>
+            <div style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, overflow:"hidden" }}>
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
                 <thead>
-                  <tr style={{ borderBottom:"1px solid rgba(122,154,138,0.24)" }}>
+                  <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)" }}>
                     {[
                       {k:"name",l:"Property"},{k:"status",l:"Status"},{k:"occupancy",l:"Occ%"},{k:"cf2026",l:"2026 CF"},{k:"dsc",l:"DSC"},
                       {k:"loanBal",l:"Loan Bal"},{k:"rate",l:"Rate"},{k:"maturity",l:"Maturity"},{k:"drawAvail",l:"Draw $"}
                     ].map(col => (
                       <th key={col.k} onClick={() => { if(sortBy===col.k) setSortDir(d=>d==="desc"?"asc":"desc"); else { setSortBy(col.k); setSortDir("desc"); }}}
-                        style={{ padding:"12px 14px", textAlign:"left", color:"#6b7280", fontWeight:600, cursor:"pointer", fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em", userSelect:"none" }}>
+                        style={{ padding:"12px 14px", textAlign:"left", color:"#94a3b8", fontWeight:600, cursor:"pointer", fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em", userSelect:"none" }}>
                         {col.l} {sortBy === col.k && (sortDir === "desc" ? "↓" : "↑")}
                       </th>
                     ))}
@@ -424,18 +424,18 @@ export default function PortfolioDashboard() {
                 <tbody>
                   {filtered.map(p => (
                     <tr key={p.name} onClick={() => setSelectedProp(p.name)}
-                      style={{ borderBottom:"1px solid rgba(255,255,255,0.95)", cursor:"pointer", transition:"background 0.15s" }}
-                      onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.08)"}
+                      style={{ borderBottom:"1px solid rgba(255,255,255,0.03)", cursor:"pointer", transition:"background 0.15s" }}
+                      onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                       onMouseOut={e => e.currentTarget.style.background="transparent"}>
                       <td style={{ padding:"10px 14px", fontWeight:600 }}>{p.name}</td>
                       <td style={{ padding:"10px 14px" }}><StatusBadge status={p.status} /></td>
-                      <td style={{ padding:"10px 14px", color: p.occupancy < 0 ? "#6b7280" : p.occupancy < 70 ? "#dc2626" : p.occupancy < 90 ? "#eab308" : "#7A9A8A", fontWeight:600 }}>{p.occupancy < 0 ? "N/A" : p.occupancy + "%"}</td>
-                      <td style={{ padding:"10px 14px", color: p.cf2026 >= 0 ? "#7A9A8A" : "#f87171", fontWeight:700 }}>{fmtFull(p.cf2026)}</td>
-                      <td style={{ padding:"10px 14px", color: p.dsc < 1 ? "#f87171" : p.dsc < 1.25 ? "#eab308" : "#7A9A8A", fontWeight:600 }}>{p.dsc.toFixed(2)}x</td>
+                      <td style={{ padding:"10px 14px", color: p.occupancy < 0 ? "#94a3b8" : p.occupancy < 70 ? "#dc2626" : p.occupancy < 90 ? "#eab308" : "#16a34a", fontWeight:600 }}>{p.occupancy < 0 ? "N/A" : p.occupancy + "%"}</td>
+                      <td style={{ padding:"10px 14px", color: p.cf2026 >= 0 ? "#4ade80" : "#f87171", fontWeight:700 }}>{fmtFull(p.cf2026)}</td>
+                      <td style={{ padding:"10px 14px", color: p.dsc < 1 ? "#f87171" : p.dsc < 1.25 ? "#eab308" : "#4ade80", fontWeight:600 }}>{p.dsc.toFixed(2)}x</td>
                       <td style={{ padding:"10px 14px" }}>{fmt(p.loanBal)}</td>
-                      <td style={{ padding:"10px 14px" }}>{p.rate}% <span style={{ color:"#6b7280", fontSize:11 }}>{p.rateType === "Floating" ? "⟳" : "■"}</span></td>
+                      <td style={{ padding:"10px 14px" }}>{p.rate}% <span style={{ color:"#64748b", fontSize:11 }}>{p.rateType === "Floating" ? "⟳" : "■"}</span></td>
                       <td style={{ padding:"10px 14px" }}>{p.maturity} <MaturityFlag maturity={p.maturity} /></td>
-                      <td style={{ padding:"10px 14px", color: p.drawAvail > 0 ? "#7A9A8A" : "#D9DED9" }}>{p.drawAvail > 0 ? fmt(p.drawAvail) : "—"}</td>
+                      <td style={{ padding:"10px 14px", color: p.drawAvail > 0 ? "#22d3ee" : "#334155" }}>{p.drawAvail > 0 ? fmt(p.drawAvail) : "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -471,72 +471,72 @@ export default function PortfolioDashboard() {
           const ltvChartData = valuations
             .filter(v => v.ltv < 200)
             .sort((a,b) => a.ltv - b.ltv)
-            .map(v => ({ name: v.name, ltv: v.ltv, fill: v.ltv <= 50 ? "#7A9A8A" : v.ltv <= 70 ? "#7A9A8A" : v.ltv <= 85 ? "#eab308" : "#dc2626" }));
+            .map(v => ({ name: v.name, ltv: v.ltv, fill: v.ltv <= 50 ? "#16a34a" : v.ltv <= 70 ? "#22d3ee" : v.ltv <= 85 ? "#eab308" : "#dc2626" }));
 
           const equityData = valuations
             .filter(v => v.equity > 0)
             .sort((a,b) => b.equity - a.equity);
 
           const groupPieData = [
-            { name: "Cash Cow (Safe)", value: cashCows.reduce((s,v)=>s+Math.max(v.valuation,0),0), color: "#7A9A8A" },
-            { name: "Stable Core", value: stableCore.reduce((s,v)=>s+Math.max(v.valuation,0),0), color: "#7A9A8A" },
+            { name: "Cash Cow (Safe)", value: cashCows.reduce((s,v)=>s+Math.max(v.valuation,0),0), color: "#16a34a" },
+            { name: "Stable Core", value: stableCore.reduce((s,v)=>s+Math.max(v.valuation,0),0), color: "#22d3ee" },
             { name: "Watch List", value: watchList.reduce((s,v)=>s+Math.max(v.valuation,0),0), color: "#dc2626" },
           ];
 
           return (
           <div>
-            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 20px", fontFamily:"'Times New Roman', Georgia, serif" }}>Portfolio Valuation & Leverage</h2>
+            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 20px", fontFamily:"'Playfair Display', serif" }}>Portfolio Valuation & Leverage</h2>
 
             {/* KPIs */}
             <div style={{ display:"flex", gap:16, flexWrap:"wrap", marginBottom:28 }}>
-              <KPICard label="Total AUM (Valuation)" value={"$" + (totalAUM/1e6).toFixed(1) + "M"} accent="#5E7B6D" sub={valuations.length + " properties"} />
+              <KPICard label="Total AUM (Valuation)" value={"$" + (totalAUM/1e6).toFixed(1) + "M"} accent="#a5b4fc" sub={valuations.length + " properties"} />
               <KPICard label="Total Debt" value={"$" + (totalDebt/1e6).toFixed(1) + "M"} />
-              <KPICard label="Portfolio LTV" value={portfolioLTV + "%"} accent={parseFloat(portfolioLTV) > 70 ? "#f97316" : "#7A9A8A"} sub="Weighted by valuation" />
-              <KPICard label="Total Equity" value={"$" + (totalEquity/1e6).toFixed(1) + "M"} accent="#7A9A8A" />
-              <KPICard label="Cash Out Potential (65% LTV)" value={fmt(totalCashOutPotential)} accent="#7A9A8A" sub="From low-leverage properties" />
+              <KPICard label="Portfolio LTV" value={portfolioLTV + "%"} accent={parseFloat(portfolioLTV) > 70 ? "#f97316" : "#16a34a"} sub="Weighted by valuation" />
+              <KPICard label="Total Equity" value={"$" + (totalEquity/1e6).toFixed(1) + "M"} accent="#16a34a" />
+              <KPICard label="Cash Out Potential (65% LTV)" value={fmt(totalCashOutPotential)} accent="#22d3ee" sub="From low-leverage properties" />
             </div>
 
             {/* Valuation by Group + LTV Chart */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 2fr", gap:20, marginBottom:24 }}>
               {/* Group Breakdown */}
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#111827" }}>AUM by Risk Group</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#cbd5e1" }}>AUM by Risk Group</div>
                 <ResponsiveContainer width="100%" height={200}>
                   <PieChart>
                     <Pie data={groupPieData} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value" stroke="none">
                       {groupPieData.map((e, i) => <Cell key={i} fill={e.color} />)}
                     </Pie>
-                    <Tooltip contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:8, fontSize:12 }} formatter={v => "$" + (v/1e6).toFixed(1) + "M"} />
+                    <Tooltip contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:8, fontSize:12 }} formatter={v => "$" + (v/1e6).toFixed(1) + "M"} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div style={{ marginTop:8 }}>
                   {[
-                    { label:"Cash Cow (Safe)", count: cashCows.length, equity: cashCowEquity, color:"#7A9A8A" },
-                    { label:"Stable Core", count: stableCore.length, equity: stableCoreEquity, color:"#7A9A8A" },
+                    { label:"Cash Cow (Safe)", count: cashCows.length, equity: cashCowEquity, color:"#16a34a" },
+                    { label:"Stable Core", count: stableCore.length, equity: stableCoreEquity, color:"#22d3ee" },
                     { label:"Watch List", count: watchList.length, equity: watchList.reduce((s,v)=>s+v.equity,0), color:"#dc2626" },
                   ].map(g => (
-                    <div key={g.label} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 0", borderBottom:"1px solid rgba(122,154,138,0.08)" }}>
+                    <div key={g.label} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 0", borderBottom:"1px solid rgba(255,255,255,0.04)" }}>
                       <div style={{ display:"flex", alignItems:"center", gap:8 }}>
                         <div style={{ width:10, height:10, borderRadius:3, background:g.color }} />
-                        <span style={{ fontSize:12, color:"#6b7280" }}>{g.label} ({g.count})</span>
+                        <span style={{ fontSize:12, color:"#94a3b8" }}>{g.label} ({g.count})</span>
                       </div>
-                      <span style={{ fontSize:12, fontWeight:600, color: g.equity > 0 ? "#374151" : "#f87171" }}>{fmt(g.equity)} equity</span>
+                      <span style={{ fontSize:12, fontWeight:600, color: g.equity > 0 ? "#e2e8f0" : "#f87171" }}>{fmt(g.equity)} equity</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* LTV Bar Chart */}
-              <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:4, color:"#111827" }}>Loan-to-Value by Property</div>
-                <div style={{ fontSize:12, color:"#6b7280", marginBottom:16 }}>Properties with LTV &gt; 200% excluded for scale. Green ≤50% · Blue ≤70% · Yellow ≤85% · Red &gt;85%</div>
+              <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+                <div style={{ fontSize:14, fontWeight:600, marginBottom:4, color:"#cbd5e1" }}>Loan-to-Value by Property</div>
+                <div style={{ fontSize:12, color:"#64748b", marginBottom:16 }}>Properties with LTV &gt; 200% excluded for scale. Green ≤50% · Blue ≤70% · Yellow ≤85% · Red &gt;85%</div>
                 <ResponsiveContainer width="100%" height={320}>
                   <BarChart data={ltvChartData} margin={{ top:10, right:10, left:10, bottom:70 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
-                    <XAxis dataKey="name" tick={{ fill:"#6b7280", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
-                    <YAxis tick={{ fill:"#6b7280", fontSize:11 }} axisLine={false} tickFormatter={v => v + "%"} domain={[0, 120]} />
-                    <Tooltip contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:8, fontSize:13 }} formatter={v => v.toFixed(1) + "%"} />
-                    <ReferenceLine y={65} stroke="#7A9A8A" strokeDasharray="5 5" label={{ value:"65% Target", fill:"#7A9A8A", fontSize:11, position:"right" }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="name" tick={{ fill:"#94a3b8", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
+                    <YAxis tick={{ fill:"#94a3b8", fontSize:11 }} axisLine={false} tickFormatter={v => v + "%"} domain={[0, 120]} />
+                    <Tooltip contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:8, fontSize:13 }} formatter={v => v.toFixed(1) + "%"} />
+                    <ReferenceLine y={65} stroke="#22d3ee" strokeDasharray="5 5" label={{ value:"65% Target", fill:"#22d3ee", fontSize:11, position:"right" }} />
                     <Bar dataKey="ltv" radius={[4,4,0,0]}>
                       {ltvChartData.map((e, i) => <Cell key={i} fill={e.fill} opacity={0.8} />)}
                     </Bar>
@@ -546,43 +546,43 @@ export default function PortfolioDashboard() {
             </div>
 
             {/* Equity Reserves / Refi Candidates */}
-            <div style={{ background:"rgba(122,154,138,0.08)", border:"1px solid rgba(122,154,138,0.22)", borderRadius:14, padding:24, marginBottom:24 }}>
+            <div style={{ background:"rgba(34,211,238,0.05)", border:"1px solid rgba(34,211,238,0.12)", borderRadius:14, padding:24, marginBottom:24 }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 }}>
                 <div>
-                  <div style={{ fontSize:14, fontWeight:600, color:"#7A9A8A" }}>Emergency Capital Reserve — Refi Candidates</div>
-                  <div style={{ fontSize:12, color:"#6b7280", marginTop:2 }}>Properties with low LTV where we could pull cash out via refinance if capital is needed elsewhere. Modeled at 65% LTV ceiling.</div>
+                  <div style={{ fontSize:14, fontWeight:600, color:"#22d3ee" }}>Emergency Capital Reserve — Refi Candidates</div>
+                  <div style={{ fontSize:12, color:"#64748b", marginTop:2 }}>Properties with low LTV where we could pull cash out via refinance if capital is needed elsewhere. Modeled at 65% LTV ceiling.</div>
                 </div>
                 <div style={{ textAlign:"right" }}>
-                  <div style={{ fontSize:11, color:"#6b7280" }}>Total Cash-Out Potential</div>
-                  <div style={{ fontSize:22, fontWeight:700, color:"#7A9A8A" }}>{fmt(totalCashOutPotential)}</div>
+                  <div style={{ fontSize:11, color:"#64748b" }}>Total Cash-Out Potential</div>
+                  <div style={{ fontSize:22, fontWeight:700, color:"#22d3ee" }}>{fmt(totalCashOutPotential)}</div>
                 </div>
               </div>
               <div style={{ marginTop:16 }}>
                 <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
                   <thead>
-                    <tr style={{ borderBottom:"1px solid rgba(122,154,138,0.24)" }}>
+                    <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)" }}>
                       {["Property","Valuation","Loan Balance","Current LTV","Equity","Max Loan @ 65%","Potential Cash Out","Group"].map(h => (
-                        <th key={h} style={{ padding:"10px 12px", textAlign:"left", color:"#6b7280", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
+                        <th key={h} style={{ padding:"10px 12px", textAlign:"left", color:"#94a3b8", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
                     {refiCandidates.map(v => (
                       <tr key={v.name} onClick={() => setSelectedProp(v.name)}
-                        style={{ borderBottom:"1px solid rgba(255,255,255,0.95)", cursor:"pointer" }}
-                        onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.08)"}
+                        style={{ borderBottom:"1px solid rgba(255,255,255,0.03)", cursor:"pointer" }}
+                        onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                         onMouseOut={e => e.currentTarget.style.background="transparent"}>
                         <td style={{ padding:"8px 12px", fontWeight:600 }}>{v.name}</td>
                         <td style={{ padding:"8px 12px" }}>{fmt(v.valuation)}</td>
                         <td style={{ padding:"8px 12px" }}>{fmt(v.loan)}</td>
-                        <td style={{ padding:"8px 12px", color: v.ltv <= 50 ? "#7A9A8A" : "#7A9A8A", fontWeight:700 }}>{v.ltv.toFixed(1)}%</td>
-                        <td style={{ padding:"8px 12px", color:"#7A9A8A", fontWeight:600 }}>{fmt(v.equity)}</td>
-                        <td style={{ padding:"8px 12px", color:"#6b7280" }}>{fmt(v.maxLoan65)}</td>
-                        <td style={{ padding:"8px 12px", color:"#7A9A8A", fontWeight:700 }}>{fmt(v.cashOut)}</td>
+                        <td style={{ padding:"8px 12px", color: v.ltv <= 50 ? "#4ade80" : "#22d3ee", fontWeight:700 }}>{v.ltv.toFixed(1)}%</td>
+                        <td style={{ padding:"8px 12px", color:"#4ade80", fontWeight:600 }}>{fmt(v.equity)}</td>
+                        <td style={{ padding:"8px 12px", color:"#94a3b8" }}>{fmt(v.maxLoan65)}</td>
+                        <td style={{ padding:"8px 12px", color:"#22d3ee", fontWeight:700 }}>{fmt(v.cashOut)}</td>
                         <td style={{ padding:"8px 12px" }}>
                           <span style={{ padding:"2px 8px", borderRadius:12, fontSize:11, fontWeight:600,
                             background: v.group === "Cash Cow (Safe)" ? "rgba(22,163,106,0.15)" : "rgba(34,211,238,0.15)",
-                            color: v.group === "Cash Cow (Safe)" ? "#7A9A8A" : "#7A9A8A" }}>
+                            color: v.group === "Cash Cow (Safe)" ? "#4ade80" : "#22d3ee" }}>
                             {v.group}
                           </span>
                         </td>
@@ -594,51 +594,51 @@ export default function PortfolioDashboard() {
             </div>
 
             {/* Full Valuation Table */}
-            <div style={{ background:"rgba(255,255,255,0.92)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, overflow:"hidden" }}>
-              <div style={{ padding:"16px 20px", borderBottom:"1px solid rgba(122,154,138,0.18)" }}>
-                <div style={{ fontSize:14, fontWeight:600, color:"#111827" }}>Full Portfolio Valuation Schedule</div>
+            <div style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, overflow:"hidden" }}>
+              <div style={{ padding:"16px 20px", borderBottom:"1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ fontSize:14, fontWeight:600, color:"#cbd5e1" }}>Full Portfolio Valuation Schedule</div>
               </div>
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
                 <thead>
-                  <tr style={{ borderBottom:"1px solid rgba(122,154,138,0.24)" }}>
+                  <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)" }}>
                     {["Property","NOI","Cap Rate","Valuation","Loan Balance","LTV","Equity","Risk Group"].map(h => (
-                      <th key={h} style={{ padding:"10px 12px", textAlign:"left", color:"#6b7280", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
+                      <th key={h} style={{ padding:"10px 12px", textAlign:"left", color:"#94a3b8", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {valuations.map(v => (
                     <tr key={v.name} onClick={() => { const p = properties.find(p=>p.name===v.name); if(p) setSelectedProp(v.name); }}
-                      style={{ borderBottom:"1px solid rgba(255,255,255,0.95)", cursor:"pointer" }}
-                      onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.08)"}
+                      style={{ borderBottom:"1px solid rgba(255,255,255,0.03)", cursor:"pointer" }}
+                      onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                       onMouseOut={e => e.currentTarget.style.background="transparent"}>
                       <td style={{ padding:"8px 12px", fontWeight:600 }}>{v.name}</td>
-                      <td style={{ padding:"8px 12px", color: v.noi < 0 ? "#f87171" : "#374151" }}>{fmtFull(v.noi)}</td>
+                      <td style={{ padding:"8px 12px", color: v.noi < 0 ? "#f87171" : "#e2e8f0" }}>{fmtFull(v.noi)}</td>
                       <td style={{ padding:"8px 12px" }}>{v.capRate > 0 ? v.capRate.toFixed(2) + "%" : "Override"}</td>
                       <td style={{ padding:"8px 12px", fontWeight:600 }}>{v.valuation > 0 ? fmt(v.valuation) : "$0"}</td>
                       <td style={{ padding:"8px 12px" }}>{fmt(v.loan)}</td>
                       <td style={{ padding:"8px 12px", fontWeight:700,
-                        color: v.ltv <= 50 ? "#7A9A8A" : v.ltv <= 70 ? "#7A9A8A" : v.ltv <= 85 ? "#eab308" : v.ltv <= 100 ? "#f97316" : "#dc2626"
+                        color: v.ltv <= 50 ? "#4ade80" : v.ltv <= 70 ? "#22d3ee" : v.ltv <= 85 ? "#eab308" : v.ltv <= 100 ? "#f97316" : "#dc2626"
                       }}>{v.ltv < 1000 ? v.ltv.toFixed(1) + "%" : "N/M"}</td>
-                      <td style={{ padding:"8px 12px", color: v.equity >= 0 ? "#7A9A8A" : "#f87171", fontWeight:600 }}>{fmtFull(v.equity)}</td>
+                      <td style={{ padding:"8px 12px", color: v.equity >= 0 ? "#4ade80" : "#f87171", fontWeight:600 }}>{fmtFull(v.equity)}</td>
                       <td style={{ padding:"8px 12px" }}>
                         <span style={{ padding:"2px 8px", borderRadius:12, fontSize:11, fontWeight:600,
                           background: v.group === "Cash Cow (Safe)" ? "rgba(22,163,106,0.15)" : v.group === "Stable Core" ? "rgba(34,211,238,0.15)" : "rgba(220,38,38,0.15)",
-                          color: v.group === "Cash Cow (Safe)" ? "#7A9A8A" : v.group === "Stable Core" ? "#7A9A8A" : "#f87171" }}>
+                          color: v.group === "Cash Cow (Safe)" ? "#4ade80" : v.group === "Stable Core" ? "#22d3ee" : "#f87171" }}>
                           {v.group}
                         </span>
                       </td>
                     </tr>
                   ))}
                   {/* Totals Row */}
-                  <tr style={{ borderTop:"2px solid rgba(122,154,138,0.3)", background:"rgba(255,255,255,0.95)" }}>
-                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#000000" }}>TOTALS</td>
+                  <tr style={{ borderTop:"2px solid rgba(255,255,255,0.1)", background:"rgba(255,255,255,0.03)" }}>
+                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#f1f5f9" }}>TOTALS</td>
                     <td style={{ padding:"10px 12px" }}></td>
                     <td style={{ padding:"10px 12px" }}></td>
-                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#5E7B6D" }}>{fmt(totalAUM)}</td>
+                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#a5b4fc" }}>{fmt(totalAUM)}</td>
                     <td style={{ padding:"10px 12px", fontWeight:700 }}>{fmt(totalDebt)}</td>
-                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#7A9A8A" }}>{portfolioLTV}%</td>
-                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#7A9A8A" }}>{fmt(totalEquity)}</td>
+                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#22d3ee" }}>{portfolioLTV}%</td>
+                    <td style={{ padding:"10px 12px", fontWeight:700, color:"#4ade80" }}>{fmt(totalEquity)}</td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -651,26 +651,26 @@ export default function PortfolioDashboard() {
         {/* ════════════════════ DEBT & MATURITIES ════════════════════ */}
         {view === "debt" && !selectedProp && (
           <div>
-            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 20px", fontFamily:"'Times New Roman', Georgia, serif" }}>Debt Schedule & Maturities</h2>
+            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 20px", fontFamily:"'Playfair Display', serif" }}>Debt Schedule & Maturities</h2>
 
             <div style={{ display:"flex", gap:16, flexWrap:"wrap", marginBottom:28 }}>
               <KPICard label="Total Debt" value={fmt(totals.loanBal)} />
               <KPICard label="Annual Debt Service" value={fmt(totals.debtService)} />
               <KPICard label="2026 Maturities" value={maturities2026.length + " loans"} accent="#f97316" sub={fmt(maturities2026.reduce((s,p)=>s+p.loanBal,0)) + " total"} />
-              <KPICard label="Draw $ Available" value={fmt(totals.drawAvail)} accent="#7A9A8A" />
+              <KPICard label="Draw $ Available" value={fmt(totals.drawAvail)} accent="#22d3ee" />
             </div>
 
             {/* DSC Chart */}
-            <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24, marginBottom:24 }}>
-              <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#111827" }}>Debt Service Coverage by Property</div>
+            <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24, marginBottom:24 }}>
+              <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#cbd5e1" }}>Debt Service Coverage by Property</div>
               <ResponsiveContainer width="100%" height={350}>
                 <BarChart data={dscData} margin={{ top:10, right:10, left:10, bottom:60 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
-                  <XAxis dataKey="name" tick={{ fill:"#6b7280", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
-                  <YAxis tick={{ fill:"#6b7280", fontSize:11 }} axisLine={false} />
-                  <Tooltip contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:8, fontSize:13 }} formatter={v => v.toFixed(2) + "x"} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <XAxis dataKey="name" tick={{ fill:"#94a3b8", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
+                  <YAxis tick={{ fill:"#94a3b8", fontSize:11 }} axisLine={false} />
+                  <Tooltip contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:8, fontSize:13 }} formatter={v => v.toFixed(2) + "x"} />
                   <ReferenceLine y={1} stroke="#eab308" strokeDasharray="5 5" label={{ value:"Breakeven", fill:"#eab308", fontSize:11 }} />
-                  <ReferenceLine y={1.25} stroke="#7A9A8A" strokeDasharray="3 3" label={{ value:"1.25x Target", fill:"#7A9A8A", fontSize:11 }} />
+                  <ReferenceLine y={1.25} stroke="#16a34a" strokeDasharray="3 3" label={{ value:"1.25x Target", fill:"#16a34a", fontSize:11 }} />
                   <Bar dataKey="dsc" radius={[4,4,0,0]}>
                     {dscData.map((e, i) => <Cell key={i} fill={e.fill} />)}
                   </Bar>
@@ -679,11 +679,11 @@ export default function PortfolioDashboard() {
             </div>
 
             {/* Maturity Timeline */}
-            <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-              <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#111827" }}>2026 Maturity & Rate Reset Timeline</div>
+            <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+              <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#cbd5e1" }}>2026 Maturity & Rate Reset Timeline</div>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(12, 1fr)", gap:4, marginBottom:16 }}>
                 {["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].map(m => (
-                  <div key={m} style={{ textAlign:"center", fontSize:11, color:"#6b7280", fontWeight:600 }}>{m}</div>
+                  <div key={m} style={{ textAlign:"center", fontSize:11, color:"#64748b", fontWeight:600 }}>{m}</div>
                 ))}
               </div>
               {maturities2026.map(p => {
@@ -693,9 +693,9 @@ export default function PortfolioDashboard() {
                     {Array.from({length:12}).map((_,i) => (
                       <div key={i} style={{
                         height:32, borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center",
-                        background: i === month ? (p.dsc < 1 ? "rgba(220,38,38,0.3)" : "rgba(122,154,138,0.2)") : "rgba(255,255,255,0.92)",
-                        border: i === month ? `1px solid ${p.dsc < 1 ? "#dc262666" : "#7A9A8A66"}` : "1px solid transparent",
-                        fontSize:10, fontWeight:600, color: i === month ? "#000000" : "transparent"
+                        background: i === month ? (p.dsc < 1 ? "rgba(220,38,38,0.3)" : "rgba(99,102,241,0.25)") : "rgba(255,255,255,0.02)",
+                        border: i === month ? `1px solid ${p.dsc < 1 ? "#dc262666" : "#6366f166"}` : "1px solid transparent",
+                        fontSize:10, fontWeight:600, color: i === month ? "#f1f5f9" : "transparent"
                       }}>
                         {i === month && p.name}
                       </div>
@@ -751,26 +751,26 @@ export default function PortfolioDashboard() {
 
           return (
           <div>
-            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 20px", fontFamily:"'Times New Roman', Georgia, serif" }}>2026 Cash Flow Analysis</h2>
+            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 20px", fontFamily:"'Playfair Display', serif" }}>2026 Cash Flow Analysis</h2>
 
             <div style={{ display:"flex", gap:16, flexWrap:"wrap", marginBottom:28 }}>
-              <KPICard label="Total 2026 Projected CF" value={fmtFull(totals.cf2026)} accent={totals.cf2026>0?"#7A9A8A":"#dc2626"} />
-              <KPICard label="Trophy CF" value={fmtFull(cfByStatus[0].cf)} accent="#7A9A8A" />
-              <KPICard label="WIP CF" value={fmtFull(cfByStatus[1].cf)} accent={cfByStatus[1].cf>0?"#7A9A8A":"#eab308"} />
+              <KPICard label="Total 2026 Projected CF" value={fmtFull(totals.cf2026)} accent={totals.cf2026>0?"#16a34a":"#dc2626"} />
+              <KPICard label="Trophy CF" value={fmtFull(cfByStatus[0].cf)} accent="#16a34a" />
+              <KPICard label="WIP CF" value={fmtFull(cfByStatus[1].cf)} accent={cfByStatus[1].cf>0?"#16a34a":"#eab308"} />
               <KPICard label="Problem CF" value={fmtFull(cfByStatus[2].cf)} accent="#dc2626" />
               <KPICard label="2026 CapEx Budget" value={fmtFull(totalCapex)} accent="#f97316" sub={`Across ${capexDetails.length} properties`} />
             </div>
 
             {/* CF Chart */}
-            <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24, marginBottom:24 }}>
-              <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#111827" }}>2026 Projected Cash Flow by Property</div>
+            <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24, marginBottom:24 }}>
+              <div style={{ fontSize:14, fontWeight:600, marginBottom:16, color:"#cbd5e1" }}>2026 Projected Cash Flow by Property</div>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={[...properties].sort((a,b)=>b.cf2026-a.cf2026)} margin={{ top:10, right:10, left:10, bottom:80 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
-                  <XAxis dataKey="name" tick={{ fill:"#6b7280", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
-                  <YAxis tick={{ fill:"#6b7280", fontSize:11 }} axisLine={false} tickFormatter={v => fmt(v)} />
-                  <Tooltip contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:8, fontSize:13 }} formatter={v => fmtFull(v)} />
-                  <ReferenceLine y={0} stroke="#9CA3AF" strokeWidth={2} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <XAxis dataKey="name" tick={{ fill:"#94a3b8", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
+                  <YAxis tick={{ fill:"#94a3b8", fontSize:11 }} axisLine={false} tickFormatter={v => fmt(v)} />
+                  <Tooltip contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:8, fontSize:13 }} formatter={v => fmtFull(v)} />
+                  <ReferenceLine y={0} stroke="#475569" strokeWidth={2} />
                   <Bar dataKey="cf2026" radius={[4,4,0,0]}>
                     {[...properties].sort((a,b)=>b.cf2026-a.cf2026).map((p, i) => (
                       <Cell key={i} fill={p.cf2026 >= 0 ? statusColors[p.status] : "#dc2626"} opacity={0.85} />
@@ -781,35 +781,35 @@ export default function PortfolioDashboard() {
             </div>
 
             {/* CapEx Budget Chart */}
-            <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24, marginBottom:24 }}>
+            <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24, marginBottom:24 }}>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
                 <div>
-                  <div style={{ fontSize:14, fontWeight:600, color:"#111827" }}>2026 Capital Expenditure Budget</div>
-                  <div style={{ fontSize:12, color:"#6b7280", marginTop:2 }}>Hover over bars for detailed breakdown · Total: {fmtFull(totalCapex)}</div>
+                  <div style={{ fontSize:14, fontWeight:600, color:"#cbd5e1" }}>2026 Capital Expenditure Budget</div>
+                  <div style={{ fontSize:12, color:"#64748b", marginTop:2 }}>Hover over bars for detailed breakdown · Total: {fmtFull(totalCapex)}</div>
                 </div>
               </div>
               <ResponsiveContainer width="100%" height={420}>
                 <BarChart data={capexDetails} margin={{ top:10, right:10, left:10, bottom:80 }} layout="horizontal">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
-                  <XAxis dataKey="property" tick={{ fill:"#6b7280", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
-                  <YAxis tick={{ fill:"#6b7280", fontSize:11 }} axisLine={false} tickFormatter={v => fmt(v)} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <XAxis dataKey="property" tick={{ fill:"#94a3b8", fontSize:10 }} angle={-45} textAnchor="end" axisLine={false} interval={0} />
+                  <YAxis tick={{ fill:"#94a3b8", fontSize:11 }} axisLine={false} tickFormatter={v => fmt(v)} />
                   <Tooltip
-                    contentStyle={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:10, fontSize:12, maxWidth:360 }}
+                    contentStyle={{ background:"#1e293b", border:"1px solid #334155", borderRadius:10, fontSize:12, maxWidth:360 }}
                     content={({ active, payload }) => {
                       if (!active || !payload || !payload.length) return null;
                       const d = payload[0].payload;
                       return (
-                        <div style={{ background:"#ffffff", border:"1px solid #D9DED9", borderRadius:10, padding:14, maxWidth:360 }}>
-                          <div style={{ fontSize:14, fontWeight:700, color:"#000000", marginBottom:6 }}>{d.property}</div>
+                        <div style={{ background:"#1e293b", border:"1px solid #334155", borderRadius:10, padding:14, maxWidth:360 }}>
+                          <div style={{ fontSize:14, fontWeight:700, color:"#f1f5f9", marginBottom:6 }}>{d.property}</div>
                           <div style={{ fontSize:18, fontWeight:700, color:"#f97316", marginBottom:8 }}>{fmtFull(d.amount)}</div>
-                          <div style={{ fontSize:11, color:"#6b7280", lineHeight:1.6 }}>{d.items}</div>
+                          <div style={{ fontSize:11, color:"#94a3b8", lineHeight:1.6 }}>{d.items}</div>
                         </div>
                       );
                     }}
                   />
                   <Bar dataKey="amount" radius={[4,4,0,0]} fill="#f97316" opacity={0.8}>
                     {capexDetails.map((c, i) => (
-                      <Cell key={i} fill={c.amount > 500000 ? "#dc2626" : c.amount > 200000 ? "#f97316" : c.amount > 100000 ? "#eab308" : "#7A9A8A"} opacity={0.75} />
+                      <Cell key={i} fill={c.amount > 500000 ? "#dc2626" : c.amount > 200000 ? "#f97316" : c.amount > 100000 ? "#eab308" : "#16a34a"} opacity={0.75} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -819,9 +819,9 @@ export default function PortfolioDashboard() {
                   { label:"> $500k", color:"#dc2626" },
                   { label:"$200k–$500k", color:"#f97316" },
                   { label:"$100k–$200k", color:"#eab308" },
-                  { label:"< $100k", color:"#7A9A8A" },
+                  { label:"< $100k", color:"#16a34a" },
                 ].map(l => (
-                  <div key={l.label} style={{ display:"flex", alignItems:"center", gap:6, fontSize:11, color:"#6b7280" }}>
+                  <div key={l.label} style={{ display:"flex", alignItems:"center", gap:6, fontSize:11, color:"#94a3b8" }}>
                     <div style={{ width:10, height:10, borderRadius:3, background:l.color, opacity:0.75 }} />
                     {l.label}
                   </div>
@@ -830,25 +830,25 @@ export default function PortfolioDashboard() {
             </div>
 
             {/* Liquidity Events */}
-            <div style={{ background:"rgba(255,255,255,0.95)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, padding:24 }}>
-              <div style={{ fontSize:14, fontWeight:600, marginBottom:4, color:"#111827" }}>2026 Liquidity Event Projections</div>
-              <div style={{ fontSize:12, color:"#6b7280", marginBottom:20 }}>Refinances, dispositions, and capital events on the horizon</div>
+            <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, padding:24 }}>
+              <div style={{ fontSize:14, fontWeight:600, marginBottom:4, color:"#cbd5e1" }}>2026 Liquidity Event Projections</div>
+              <div style={{ fontSize:12, color:"#64748b", marginBottom:20 }}>Refinances, dispositions, and capital events on the horizon</div>
 
               <div style={{ display:"grid", gap:12 }}>
                 {liquidityEvents.map(e => {
                   const isSale = e.type.toLowerCase().includes("sale");
-                  const accentColor = isSale ? "#7A9A8A" : "#7A9A8A";
+                  const accentColor = isSale ? "#a78bfa" : "#38bdf8";
                   return (
                     <div key={e.property} onClick={() => setSelectedProp(e.property)}
-                      style={{ background:"rgba(255,255,255,0.92)", border:`1px solid ${accentColor}22`, borderRadius:12, padding:20, cursor:"pointer", transition:"all 0.2s", borderLeft:`4px solid ${accentColor}` }}
-                      onMouseOver={ev => { ev.currentTarget.style.background="rgba(122,154,138,0.12)"; ev.currentTarget.style.borderColor=accentColor+"55"; }}
-                      onMouseOut={ev => { ev.currentTarget.style.background="rgba(255,255,255,0.92)"; ev.currentTarget.style.borderColor=accentColor+"22"; }}>
+                      style={{ background:"rgba(255,255,255,0.02)", border:`1px solid ${accentColor}22`, borderRadius:12, padding:20, cursor:"pointer", transition:"all 0.2s", borderLeft:`4px solid ${accentColor}` }}
+                      onMouseOver={ev => { ev.currentTarget.style.background="rgba(255,255,255,0.05)"; ev.currentTarget.style.borderColor=accentColor+"55"; }}
+                      onMouseOut={ev => { ev.currentTarget.style.background="rgba(255,255,255,0.02)"; ev.currentTarget.style.borderColor=accentColor+"22"; }}>
                       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:10 }}>
                         <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-                          <span style={{ fontSize:16, fontWeight:700, color:"#000000" }}>{e.property}</span>
+                          <span style={{ fontSize:16, fontWeight:700, color:"#f1f5f9" }}>{e.property}</span>
                           <span style={{
                             display:"inline-block", padding:"3px 10px", borderRadius:20, fontSize:11, fontWeight:600,
-                            background: isSale ? "rgba(122,154,138,0.15)" : "rgba(122,154,138,0.15)",
+                            background: isSale ? "rgba(167,139,250,0.15)" : "rgba(56,189,248,0.15)",
                             color: accentColor, border:`1px solid ${accentColor}33`
                           }}>
                             {e.type}
@@ -867,19 +867,19 @@ export default function PortfolioDashboard() {
                       </div>
                       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:16, marginBottom:10 }}>
                         <div>
-                          <div style={{ fontSize:11, color:"#6b7280", marginBottom:2 }}>Loan Balance</div>
-                          <div style={{ fontSize:14, fontWeight:600, color:"#374151" }}>{fmtFull(e.loanBal)}</div>
+                          <div style={{ fontSize:11, color:"#64748b", marginBottom:2 }}>Loan Balance</div>
+                          <div style={{ fontSize:14, fontWeight:600, color:"#e2e8f0" }}>{fmtFull(e.loanBal)}</div>
                         </div>
                         <div>
-                          <div style={{ fontSize:11, color:"#6b7280", marginBottom:2 }}>Current Rate</div>
-                          <div style={{ fontSize:14, fontWeight:600, color:"#374151" }}>{e.currentRate}</div>
+                          <div style={{ fontSize:11, color:"#64748b", marginBottom:2 }}>Current Rate</div>
+                          <div style={{ fontSize:14, fontWeight:600, color:"#e2e8f0" }}>{e.currentRate}</div>
                         </div>
                         <div>
-                          <div style={{ fontSize:11, color:"#6b7280", marginBottom:2 }}>Est. Proceeds</div>
+                          <div style={{ fontSize:11, color:"#64748b", marginBottom:2 }}>Est. Proceeds</div>
                           <div style={{ fontSize:14, fontWeight:600, color:accentColor }}>{e.estProceeds}</div>
                         </div>
                       </div>
-                      <div style={{ fontSize:12, color:"#6b7280", lineHeight:1.7 }}>{e.notes}</div>
+                      <div style={{ fontSize:12, color:"#94a3b8", lineHeight:1.7 }}>{e.notes}</div>
                     </div>
                   );
                 })}
@@ -892,31 +892,31 @@ export default function PortfolioDashboard() {
         {/* ════════════════════ REFI OPPORTUNITIES ════════════════════ */}
         {view === "refi" && !selectedProp && (
           <div>
-            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 8px", fontFamily:"'Times New Roman', Georgia, serif" }}>Refinance Opportunities</h2>
-            <p style={{ fontSize:13, color:"#6b7280", marginBottom:24 }}>Properties with above-market rates or floating exposure that may benefit from refinancing. Current Prime: 6.75% · SOFR: 3.65%</p>
+            <h2 style={{ fontSize:22, fontWeight:700, margin:"0 0 8px", fontFamily:"'Playfair Display', serif" }}>Refinance Opportunities</h2>
+            <p style={{ fontSize:13, color:"#94a3b8", marginBottom:24 }}>Properties with above-market rates or floating exposure that may benefit from refinancing. Current Prime: 6.75% · SOFR: 3.65%</p>
 
-            <div style={{ background:"rgba(255,255,255,0.92)", border:"1px solid rgba(122,154,138,0.18)", borderRadius:14, overflow:"hidden" }}>
+            <div style={{ background:"rgba(255,255,255,0.02)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:14, overflow:"hidden" }}>
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
                 <thead>
-                  <tr style={{ borderBottom:"1px solid rgba(122,154,138,0.24)" }}>
+                  <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)" }}>
                     {["Property","Current Rate","Type","Loan Balance","DSC","Maturity","Rate Reset","Opportunity"].map(h => (
-                      <th key={h} style={{ padding:"12px 14px", textAlign:"left", color:"#6b7280", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
+                      <th key={h} style={{ padding:"12px 14px", textAlign:"left", color:"#94a3b8", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {refiOpps.map(p => (
                     <tr key={p.name} onClick={() => setSelectedProp(p.name)}
-                      style={{ borderBottom:"1px solid rgba(255,255,255,0.95)", cursor:"pointer" }}
-                      onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.08)"}
+                      style={{ borderBottom:"1px solid rgba(255,255,255,0.03)", cursor:"pointer" }}
+                      onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
                       onMouseOut={e => e.currentTarget.style.background="transparent"}>
                       <td style={{ padding:"10px 14px", fontWeight:600 }}>{p.name}</td>
-                      <td style={{ padding:"10px 14px", color: p.rate >= 6 ? "#f87171" : p.rate >= 5 ? "#eab308" : "#7A9A8A", fontWeight:700 }}>{p.rate}%</td>
+                      <td style={{ padding:"10px 14px", color: p.rate >= 6 ? "#f87171" : p.rate >= 5 ? "#eab308" : "#4ade80", fontWeight:700 }}>{p.rate}%</td>
                       <td style={{ padding:"10px 14px" }}>{p.rateType === "Floating" ? <span style={{ color:"#f97316" }}>⟳ Floating</span> : "Fixed"}</td>
                       <td style={{ padding:"10px 14px" }}>{fmt(p.loanBal)}</td>
-                      <td style={{ padding:"10px 14px", color: p.dsc < 1 ? "#f87171" : "#7A9A8A" }}>{p.dsc.toFixed(2)}x</td>
+                      <td style={{ padding:"10px 14px", color: p.dsc < 1 ? "#f87171" : "#4ade80" }}>{p.dsc.toFixed(2)}x</td>
                       <td style={{ padding:"10px 14px" }}>{p.maturity} <MaturityFlag maturity={p.maturity} /></td>
-                      <td style={{ padding:"10px 14px", fontSize:11, color:"#6b7280" }}>{p.rateReset}</td>
+                      <td style={{ padding:"10px 14px", fontSize:11, color:"#94a3b8" }}>{p.rateReset}</td>
                       <td style={{ padding:"10px 14px", fontSize:11 }}>
                         {p.rateType === "Floating" ? <span style={{ color:"#f97316" }}>Lock in fixed rate</span> :
                          p.rate >= 6.5 ? <span style={{ color:"#dc2626" }}>High priority — rate well above market</span> :
@@ -928,17 +928,17 @@ export default function PortfolioDashboard() {
               </table>
             </div>
 
-            <div style={{ marginTop:24, background:"rgba(122,154,138,0.08)", border:"1px solid rgba(122,154,138,0.16)", borderRadius:14, padding:24 }}>
-              <div style={{ fontSize:14, fontWeight:600, marginBottom:8, color:"#5E7B6D" }}>Rate Reset Watch — 2026</div>
+            <div style={{ marginTop:24, background:"rgba(99,102,241,0.05)", border:"1px solid rgba(99,102,241,0.15)", borderRadius:14, padding:24 }}>
+              <div style={{ fontSize:14, fontWeight:600, marginBottom:8, color:"#a5b4fc" }}>Rate Reset Watch — 2026</div>
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
                 {properties.filter(p => p.rateReset && p.rateReset !== "None" && p.rateReset !== "None (life ins. loan)" && p.rateReset !== "None (CMBS)").map(p => (
                   <div key={p.name} onClick={() => setSelectedProp(p.name)}
-                    style={{ display:"flex", justifyContent:"space-between", padding:"10px 14px", background:"rgba(255,255,255,0.95)", borderRadius:8, cursor:"pointer" }}
-                    onMouseOver={e => e.currentTarget.style.background="rgba(122,154,138,0.18)"}
-                    onMouseOut={e => e.currentTarget.style.background="rgba(255,255,255,0.95)"}>
+                    style={{ display:"flex", justifyContent:"space-between", padding:"10px 14px", background:"rgba(255,255,255,0.03)", borderRadius:8, cursor:"pointer" }}
+                    onMouseOver={e => e.currentTarget.style.background="rgba(255,255,255,0.06)"}
+                    onMouseOut={e => e.currentTarget.style.background="rgba(255,255,255,0.03)"}>
                     <div>
                       <div style={{ fontSize:13, fontWeight:600 }}>{p.name}</div>
-                      <div style={{ fontSize:11, color:"#6b7280" }}>Currently {p.rate}% {p.rateType}</div>
+                      <div style={{ fontSize:11, color:"#94a3b8" }}>Currently {p.rate}% {p.rateType}</div>
                     </div>
                     <div style={{ textAlign:"right" }}>
                       <div style={{ fontSize:12, color:"#f97316", fontWeight:600 }}>{p.rateReset}</div>

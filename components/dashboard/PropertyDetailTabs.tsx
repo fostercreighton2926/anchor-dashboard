@@ -45,7 +45,7 @@ export default function PropertyDetailTabs({
     const start = Math.max(0, (new Date(project.plannedDate).getFullYear() - now.getFullYear()) * 12 + (new Date(project.plannedDate).getMonth() - now.getMonth()))
     const end = Math.max(start + 1, (new Date(project.dueDate).getFullYear() - now.getFullYear()) * 12 + (new Date(project.dueDate).getMonth() - now.getMonth()))
     const health = getCapexPriorityHealth(project.priority)
-    const color = health.tone === 'red' ? '#ef4444' : health.tone === 'yellow' ? '#f59e0b' : health.tone === 'green' ? '#7A9A8A' : '#7A9A8A'
+    const color = health.tone === 'red' ? '#ef4444' : health.tone === 'yellow' ? '#f59e0b' : health.tone === 'green' ? '#10b981' : '#3b82f6'
     return {
       label: project.project,
       startMonth: start,
@@ -57,14 +57,14 @@ export default function PropertyDetailTabs({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-anchor-border bg-white p-5">
+      <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-[140px_1fr]">
-          <div className="flex h-28 items-center justify-center rounded-xl border border-anchor-border bg-gradient-to-br from-anchor-cream to-white text-4xl">
+          <div className="flex h-28 items-center justify-center rounded-xl border border-slate-700 bg-gradient-to-br from-slate-800 to-slate-900 text-4xl">
             🏢
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-anchor-text md:text-3xl">{property.property_name}</h1>
-            <p className="mt-1 text-sm text-anchor-muted">{property.date_acquired ? `Acquired ${property.date_acquired}` : 'Address not yet available in source data'}</p>
+            <h1 className="text-2xl font-semibold text-white md:text-3xl">{property.property_name}</h1>
+            <p className="mt-1 text-sm text-slate-400">{property.date_acquired ? `Acquired ${property.date_acquired}` : 'Address not yet available in source data'}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               <HealthBadge tone={occupancyHealth.tone} label={`Occupancy ${occupancy === null ? 'N/A' : `${occupancy.toFixed(1)}%`}`} emoji="👥" />
               <HealthBadge tone={dscrHealth.tone} label={`DSCR ${dscr?.toFixed(2) ?? 'N/A'}`} emoji="🏦" />
@@ -77,16 +77,16 @@ export default function PropertyDetailTabs({
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           <GaugeChart value={occupancy} label="Occupancy" />
           <div>
-            <p className="text-xs uppercase tracking-wide text-anchor-muted">NOI</p>
-            <p className="mt-2 text-xl font-semibold text-anchor-text">{formatCurrency(noi)}</p>
+            <p className="text-xs uppercase tracking-wide text-slate-400">NOI</p>
+            <p className="mt-2 text-xl font-semibold text-slate-100">{formatCurrency(noi)}</p>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-wide text-anchor-muted">Cap Rate</p>
-            <p className="mt-2 text-xl font-semibold text-anchor-text">{formatPercent(capRate, 2)}</p>
+            <p className="text-xs uppercase tracking-wide text-slate-400">Cap Rate</p>
+            <p className="mt-2 text-xl font-semibold text-slate-100">{formatPercent(capRate, 2)}</p>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-wide text-anchor-muted">Debt Loans</p>
-            <p className="mt-2 text-xl font-semibold text-anchor-text">{debtLoans.length}</p>
+            <p className="text-xs uppercase tracking-wide text-slate-400">Debt Loans</p>
+            <p className="mt-2 text-xl font-semibold text-slate-100">{debtLoans.length}</p>
           </div>
         </div>
       </section>
@@ -95,7 +95,7 @@ export default function PropertyDetailTabs({
         {tabs.map((tab) => (
           <button
             key={tab}
-            className={`rounded-lg border px-3 py-2 text-sm ${activeTab === tab ? 'border-anchor-primary bg-anchor-primary/15 text-anchor-text' : 'border-anchor-border bg-white text-anchor-body'}`}
+            className={`rounded-lg border px-3 py-2 text-sm ${activeTab === tab ? 'border-blue-500 bg-blue-500/20 text-blue-100' : 'border-slate-700 bg-slate-900/70 text-slate-300'}`}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
@@ -105,31 +105,31 @@ export default function PropertyDetailTabs({
 
       {activeTab === 'Overview' ? (
         <section className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          <article className="rounded-2xl border border-anchor-border bg-white p-4">
-            <h2 className="text-sm font-semibold text-anchor-text">📝 Investment Thesis</h2>
-            <p className="mt-2 whitespace-pre-line text-sm text-anchor-body">{property.original_investment_thesis ?? 'Not provided'}</p>
+          <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <h2 className="text-sm font-semibold text-slate-100">📝 Investment Thesis</h2>
+            <p className="mt-2 whitespace-pre-line text-sm text-slate-300">{property.original_investment_thesis ?? 'Not provided'}</p>
           </article>
-          <article className="rounded-2xl border border-anchor-border bg-white p-4">
-            <h2 className="text-sm font-semibold text-anchor-text">📅 Owner Intent (10-year)</h2>
-            <p className="mt-2 whitespace-pre-line text-sm text-anchor-body">{property.owners_intent_10yr ?? 'Not provided'}</p>
+          <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <h2 className="text-sm font-semibold text-slate-100">📅 Owner Intent (10-year)</h2>
+            <p className="mt-2 whitespace-pre-line text-sm text-slate-300">{property.owners_intent_10yr ?? 'Not provided'}</p>
           </article>
-          <article className="rounded-2xl border border-anchor-border bg-white p-4">
-            <h2 className="text-sm font-semibold text-anchor-text">🚨 Risks</h2>
-            <p className="mt-2 whitespace-pre-line text-sm text-anchor-body">{property.risks ?? 'Not provided'}</p>
+          <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <h2 className="text-sm font-semibold text-slate-100">🚨 Risks</h2>
+            <p className="mt-2 whitespace-pre-line text-sm text-slate-300">{property.risks ?? 'Not provided'}</p>
           </article>
-          <article className="rounded-2xl border border-anchor-border bg-white p-4">
-            <h2 className="text-sm font-semibold text-anchor-text">📊 Market Rate Comparison</h2>
-            <p className="mt-2 text-sm text-anchor-body">Property Avg PSF: {property.avg_psf_rate ?? 'N/A'}</p>
-            <p className="mt-1 text-sm text-anchor-body">Market PSF: {property.market_psf_rate ?? 'N/A'}</p>
+          <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <h2 className="text-sm font-semibold text-slate-100">📊 Market Rate Comparison</h2>
+            <p className="mt-2 text-sm text-slate-300">Property Avg PSF: {property.avg_psf_rate ?? 'N/A'}</p>
+            <p className="mt-1 text-sm text-slate-300">Market PSF: {property.market_psf_rate ?? 'N/A'}</p>
           </article>
         </section>
       ) : null}
 
       {activeTab === 'Debt Schedule' ? (
-        <section className="overflow-x-auto rounded-2xl border border-anchor-border bg-white p-4">
+        <section className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
           <table className="min-w-full text-sm">
             <thead>
-              <tr className="border-b border-anchor-border text-left text-anchor-muted">
+              <tr className="border-b border-slate-700 text-left text-slate-400">
                 <th className="py-2">Lender</th>
                 <th className="py-2">Balance</th>
                 <th className="py-2">Debt Service</th>
@@ -142,7 +142,7 @@ export default function PropertyDetailTabs({
               {debtLoans.map((loan) => {
                 const health = getDscrHealth(loan.dsc_market)
                 return (
-                  <tr key={loan.id} className="border-b border-anchor-border text-anchor-body">
+                  <tr key={loan.id} className="border-b border-slate-800 text-slate-200">
                     <td className="py-2">{loan.lender ?? 'N/A'}</td>
                     <td className="py-2">{formatCurrency(loan.loan_balance)}</td>
                     <td className="py-2">{formatCurrency(loan.debt_service)}</td>
@@ -160,10 +160,10 @@ export default function PropertyDetailTabs({
       {activeTab === 'CapEx Timeline' ? (
         <section className="space-y-4">
           <TimelineChart title="Property CapEx Timeline" rows={capexTimelineRows} />
-          <div className="overflow-x-auto rounded-2xl border border-anchor-border bg-white p-4">
+          <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
             <table className="min-w-full text-sm">
               <thead>
-                <tr className="border-b border-anchor-border text-left text-anchor-muted">
+                <tr className="border-b border-slate-700 text-left text-slate-400">
                   <th className="py-2">Project</th>
                   <th className="py-2">Category</th>
                   <th className="py-2">Budget</th>
@@ -175,7 +175,7 @@ export default function PropertyDetailTabs({
                 {capexProjects.map((project) => {
                   const health = getCapexPriorityHealth(project.priority)
                   return (
-                    <tr key={project.id} className="border-b border-anchor-border text-anchor-body">
+                    <tr key={project.id} className="border-b border-slate-800 text-slate-200">
                       <td className="py-2">{project.project}</td>
                       <td className="py-2"><HealthBadge tone={health.tone} label={project.category} emoji={health.emoji} /></td>
                       <td className="py-2">{formatCurrency(project.budget)}</td>
@@ -191,31 +191,31 @@ export default function PropertyDetailTabs({
       ) : null}
 
       {activeTab === 'Tenants' ? (
-        <section className="rounded-2xl border border-anchor-border bg-white p-4">
-          <p className="text-sm text-anchor-body">Tenant-level dataset is not fully parsed yet. Current extracted notes:</p>
-          <p className="mt-2 whitespace-pre-line text-sm text-anchor-muted">{property.tenant_mix ?? 'No tenant details available in source.'}</p>
-          <p className="mt-3 whitespace-pre-line text-sm text-anchor-muted">Renewals: {property.renewals ?? 'No renewals provided.'}</p>
+        <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+          <p className="text-sm text-slate-300">Tenant-level dataset is not fully parsed yet. Current extracted notes:</p>
+          <p className="mt-2 whitespace-pre-line text-sm text-slate-400">{property.tenant_mix ?? 'No tenant details available in source.'}</p>
+          <p className="mt-3 whitespace-pre-line text-sm text-slate-400">Renewals: {property.renewals ?? 'No renewals provided.'}</p>
         </section>
       ) : null}
 
       {activeTab === 'Financials' ? (
-        <section className="rounded-2xl border border-anchor-border bg-white p-4">
+        <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-anchor-muted">NOI</p>
-              <p className="mt-1 text-lg text-anchor-text">{formatCurrency(noi)}</p>
+              <p className="text-xs uppercase tracking-wide text-slate-400">NOI</p>
+              <p className="mt-1 text-lg text-slate-100">{formatCurrency(noi)}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-anchor-muted">Cap Rate</p>
-              <p className="mt-1 text-lg text-anchor-text">{formatPercent(capRate, 2)}</p>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Cap Rate</p>
+              <p className="mt-1 text-lg text-slate-100">{formatPercent(capRate, 2)}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-anchor-muted">DSCR</p>
-              <p className="mt-1 text-lg text-anchor-text">{dscr?.toFixed(2) ?? 'N/A'}</p>
+              <p className="text-xs uppercase tracking-wide text-slate-400">DSCR</p>
+              <p className="mt-1 text-lg text-slate-100">{dscr?.toFixed(2) ?? 'N/A'}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-anchor-muted">Recoverable OpEx</p>
-              <p className="mt-1 text-lg text-anchor-text">{formatCurrency(debtLoans.reduce((sum, loan) => sum + (loan.total_recoverable_opex ?? 0), 0))}</p>
+              <p className="text-xs uppercase tracking-wide text-slate-400">Recoverable OpEx</p>
+              <p className="mt-1 text-lg text-slate-100">{formatCurrency(debtLoans.reduce((sum, loan) => sum + (loan.total_recoverable_opex ?? 0), 0))}</p>
             </div>
           </div>
         </section>

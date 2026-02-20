@@ -207,6 +207,6 @@ export function riskAction(loan: { maturity_date: string | null; dsc_market: num
 export function colorForTone(tone: 'red' | 'yellow' | 'green' | 'blue'): string {
   if (tone === 'red') return '#ef4444'
   if (tone === 'yellow') return '#f59e0b'
-  if (tone === 'green') return '#7A9A8A'
-  return '#7A9A8A'
+  if (tone === 'green') return '#10b981'
+  return '#3b82f6'
 }

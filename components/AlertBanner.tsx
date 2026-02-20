@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { HealthTone } from '@/lib/health'
 
 function toneClasses(tone: HealthTone): string {
-  if (tone === 'red') return 'border-red-300 bg-red-50 text-red-900'
-  if (tone === 'yellow') return 'border-amber-300 bg-amber-50 text-amber-900'
-  return 'border-anchor-primary/50 bg-anchor-primary/10 text-anchor-text'
+  if (tone === 'red') return 'border-red-500/50 bg-red-500/10 text-red-100'
+  if (tone === 'yellow') return 'border-amber-500/50 bg-amber-500/10 text-amber-100'
+  return 'border-blue-500/50 bg-blue-500/10 text-blue-100'
 }
 
 export default function AlertBanner({
@@ -33,7 +33,7 @@ export default function AlertBanner({
         </div>
         <button
           type="button"
-          className="rounded-md border border-anchor-border px-2 py-1 text-xs"
+          className="rounded-md border border-slate-500/40 px-2 py-1 text-xs"
           onClick={() => setVisible(false)}
           aria-label="Dismiss alert"
         >

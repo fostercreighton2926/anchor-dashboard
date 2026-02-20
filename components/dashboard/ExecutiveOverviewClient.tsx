@@ -66,7 +66,7 @@ export default function ExecutiveOverviewClient({
   const debtByLender = Array.from(
     rows.reduce((map, row) => map.set(row.lender, (map.get(row.lender) ?? 0) + row.debtBalance), new Map<string, number>()).entries()
   )
-    .map(([label, value]) => ({ label, value, color: '#7A9A8A' }))
+    .map(([label, value]) => ({ label, value, color: '#3b82f6' }))
     .sort((a, b) => b.value - a.value)
 
   const composition = rows.map((row) => ({
@@ -75,7 +75,7 @@ export default function ExecutiveOverviewClient({
   }))
 
   const occupancyDist = [
-    { label: '>95%', value: rows.filter((r) => (r.occupancy ?? 0) > 95).length, color: '#7A9A8A' },
+    { label: '>95%', value: rows.filter((r) => (r.occupancy ?? 0) > 95).length, color: '#10b981' },
     { label: '85-95%', value: rows.filter((r) => (r.occupancy ?? 0) >= 85 && (r.occupancy ?? 0) <= 95).length, color: '#f59e0b' },
     { label: '<85%', value: rows.filter((r) => (r.occupancy ?? 0) < 85).length, color: '#ef4444' },
   ]
@@ -86,8 +86,8 @@ export default function ExecutiveOverviewClient({
   return (
     <div className="space-y-6 px-4 py-6 md:px-8 md:py-8">
       <header>
-        <h1 className="text-2xl font-semibold text-anchor-text md:text-3xl">📊 Executive Overview</h1>
-        <p className="mt-1 text-sm text-anchor-muted">Visual portfolio health across debt, NOI, occupancy, and CapEx.</p>
+        <h1 className="text-2xl font-semibold text-white md:text-3xl">📊 Executive Overview</h1>
+        <p className="mt-1 text-sm text-slate-400">Visual portfolio health across debt, NOI, occupancy, and CapEx.</p>
       </header>
 
       <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -115,11 +115,11 @@ export default function ExecutiveOverviewClient({
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-2xl border border-anchor-border bg-white p-4">
+          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-anchor-text">Portfolio Composition</h3>
+              <h3 className="text-sm font-semibold text-slate-100">Portfolio Composition</h3>
               <button
-                className="rounded-lg border border-anchor-border px-2 py-1 text-xs text-anchor-body hover:border-anchor-primary"
+                className="rounded-lg border border-slate-700 px-2 py-1 text-xs text-slate-300 hover:border-slate-500"
                 onClick={() => setCompositionMode((prev) => (prev === 'value' ? 'sf' : 'value'))}
               >
                 Toggle: {compositionMode}
@@ -132,8 +132,8 @@ export default function ExecutiveOverviewClient({
       </section>
 
       <section className="flex flex-wrap gap-3">
-        <Link href="/annual-property-reviews" className="rounded-xl border border-anchor-primary/40 bg-anchor-primary/10 px-4 py-2 text-sm text-anchor-primaryDark">📘 Open Annual Property Reviews</Link>
-        <Link href="/" className="rounded-xl border border-anchor-primary/40 bg-anchor-primary/10 px-4 py-2 text-sm text-anchor-primaryDark">📊 Open Operational Dashboard</Link>
+        <Link href="/annual-property-reviews" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📘 Open Annual Property Reviews</Link>
+        <Link href="/" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📊 Open Operational Dashboard</Link>
       </section>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
