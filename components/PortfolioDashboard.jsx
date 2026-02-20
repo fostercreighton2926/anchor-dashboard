@@ -89,6 +89,8 @@ export default function PortfolioDashboard() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortBy, setSortBy] = useState("cf2026");
   const [sortDir, setSortDir] = useState("desc");
+  const [refiSortBy, setRefiSortBy] = useState("rate");
+  const [refiSortDir, setRefiSortDir] = useState("desc");
 
   const filtered = useMemo(() => {
     let d = statusFilter === "All" ? [...properties] : properties.filter(p => p.status === statusFilter);
@@ -143,7 +145,70 @@ export default function PortfolioDashboard() {
   const refiOpps = properties.filter(p => {
     return (p.rateType === "Fixed" && p.rate >= 5.5 && new Date(p.maturity) <= new Date(2028,0,1)) ||
            (p.rateType === "Floating");
-  }).sort((a,b)=>b.rate-a.rate);
+  });
+
+  const getRefiOpportunityText = (p) => {
+    if (p.rateType === "Floating") return "Lock in fixed rate";
+    if (p.rate >= 6.5) return "High priority — rate well above market";
+    return "Evaluate at maturity";
+  };
+
+  const getRefiRateResetSortValue = (rateReset) => {
+    const parsed = Date.parse(rateReset);
+    if (!Number.isNaN(parsed)) return { type:"date", value: parsed };
+    return { type:"text", value: (rateReset || "").toLowerCase() };
+  };
+
+  const sortedRefiOpps = useMemo(() => {
+    const sorters = {
+      name: (p) => p.name.toLowerCase(),
+      rate: (p) => p.rate,
+      rateType: (p) => p.rateType.toLowerCase(),
+      loanBal: (p) => p.loanBal,
+      dsc: (p) => p.dsc,
+      maturity: (p) => Date.parse(p.maturity),
+      rateReset: (p) => getRefiRateResetSortValue(p.rateReset),
+      opportunity: (p) => getRefiOpportunityText(p).toLowerCase(),
+    };
+
+    const sorted = [...refiOpps].sort((a, b) => {
+      const aVal = sorters[refiSortBy](a);
+      const bVal = sorters[refiSortBy](b);
+
+      if (refiSortBy === "rateReset") {
+        if (aVal.type !== bVal.type) return aVal.type === "date" ? -1 : 1;
+        if (aVal.value < bVal.value) return -1;
+        if (aVal.value > bVal.value) return 1;
+        return 0;
+      }
+
+      if (aVal < bVal) return -1;
+      if (aVal > bVal) return 1;
+      return 0;
+    });
+
+    return refiSortDir === "asc" ? sorted : sorted.reverse();
+  }, [refiOpps, refiSortBy, refiSortDir]);
+
+  const refiColumns = [
+    { key:"name", label:"Property" },
+    { key:"rate", label:"Current Rate" },
+    { key:"rateType", label:"Type" },
+    { key:"loanBal", label:"Loan Balance" },
+    { key:"dsc", label:"DSC" },
+    { key:"maturity", label:"Maturity" },
+    { key:"rateReset", label:"Rate Reset" },
+    { key:"opportunity", label:"Opportunity" },
+  ];
+
+  const handleRefiSort = (key) => {
+    if (refiSortBy === key) {
+      setRefiSortDir(refiSortDir === "asc" ? "desc" : "asc");
+      return;
+    }
+    setRefiSortBy(key);
+    setRefiSortDir(key === "rate" ? "desc" : "asc");
+  };
 
   const navItems = [
     { id:"overview", label:"Overview" },
@@ -915,13 +980,25 @@ export default function PortfolioDashboard() {
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:13 }}>
                 <thead>
                   <tr style={{ borderBottom:"1px solid rgba(15,23,42,0.09)" }}>
-                    {["Property","Current Rate","Type","Loan Balance","DSC","Maturity","Rate Reset","Opportunity"].map(h => (
-                      <th key={h} style={{ padding:"12px 14px", textAlign:"left", color:"#94a3b8", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em" }}>{h}</th>
+                    {refiColumns.map(col => (
+                      <th
+                        key={col.key}
+                        onClick={() => handleRefiSort(col.key)}
+                        style={{ padding:"12px 14px", textAlign:"left", color:"#94a3b8", fontWeight:600, fontSize:11, textTransform:"uppercase", letterSpacing:"0.05em", cursor:"pointer", userSelect:"none" }}
+                      >
+                        <span style={{ display:"inline-flex", alignItems:"center", gap:6 }}>
+                          {col.label}
+                          <span style={{ display:"inline-flex", flexDirection:"column", lineHeight:0.8 }}>
+                            <span style={{ color: refiSortBy === col.key && refiSortDir === "asc" ? "#7A9A8A" : "rgba(148,163,184,0.5)", fontSize:9 }}>▲</span>
+                            <span style={{ color: refiSortBy === col.key && refiSortDir === "desc" ? "#7A9A8A" : "rgba(148,163,184,0.5)", fontSize:9 }}>▼</span>
+                          </span>
+                        </span>
+                      </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {refiOpps.map(p => (
+                  {sortedRefiOpps.map(p => (
                     <tr key={p.name} onClick={() => setSelectedProp(p.name)}
                       style={{ borderBottom:"1px solid rgba(15,23,42,0.06)", cursor:"pointer" }}
                       onMouseOver={e => e.currentTarget.style.background="#f8fafc"}
@@ -934,8 +1011,8 @@ export default function PortfolioDashboard() {
                       <td style={{ padding:"10px 14px" }}>{p.maturity} <MaturityFlag maturity={p.maturity} /></td>
                       <td style={{ padding:"10px 14px", fontSize:11, color:"#94a3b8" }}>{p.rateReset}</td>
                       <td style={{ padding:"10px 14px", fontSize:11 }}>
-                        {p.rateType === "Floating" ? <span style={{ color:"#f97316" }}>Lock in fixed rate</span> :
-                         p.rate >= 6.5 ? <span style={{ color:"#dc2626" }}>High priority — rate well above market</span> :
+                        {p.rateType === "Floating" ? <span style={{ color:"#f97316" }}>{getRefiOpportunityText(p)}</span> :
+                         p.rate >= 6.5 ? <span style={{ color:"#dc2626" }}>{getRefiOpportunityText(p)}</span> :
                          <span style={{ color:"#eab308" }}>Evaluate at maturity</span>}
                       </td>
                     </tr>
