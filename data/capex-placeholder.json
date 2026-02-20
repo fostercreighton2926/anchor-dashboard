@@ -1,0 +1,98 @@
+[
+  {
+    "id": "cx-001",
+    "propertyName": "Cumberland",
+    "project": "Roof membrane replacement",
+    "category": "Critical",
+    "budget": 220000,
+    "actualSpend": 30000,
+    "plannedDate": "2026-04-15",
+    "dueDate": "2026-05-30",
+    "status": "Planning",
+    "priority": "Critical"
+  },
+  {
+    "id": "cx-002",
+    "propertyName": "Gastonia",
+    "project": "Parking lot mill + overlay",
+    "category": "Major",
+    "budget": 140000,
+    "actualSpend": 25000,
+    "plannedDate": "2026-06-01",
+    "dueDate": "2026-08-15",
+    "status": "Planning",
+    "priority": "Major"
+  },
+  {
+    "id": "cx-003",
+    "propertyName": "Hamilton",
+    "project": "Inline suite HVAC replacement",
+    "category": "Major",
+    "budget": 95000,
+    "actualSpend": 40000,
+    "plannedDate": "2026-03-12",
+    "dueDate": "2026-04-25",
+    "status": "In Progress",
+    "priority": "Major"
+  },
+  {
+    "id": "cx-004",
+    "propertyName": "Harrison",
+    "project": "Facade + storefront modernization",
+    "category": "Tenant Improvements",
+    "budget": 180000,
+    "actualSpend": 120000,
+    "plannedDate": "2026-07-10",
+    "dueDate": "2026-10-01",
+    "status": "In Progress",
+    "priority": "Tenant Improvements"
+  },
+  {
+    "id": "cx-005",
+    "propertyName": "Evansville",
+    "project": "Foundation stabilization",
+    "category": "Critical",
+    "budget": 310000,
+    "actualSpend": 10000,
+    "plannedDate": "2026-09-05",
+    "dueDate": "2026-11-25",
+    "status": "Planning",
+    "priority": "Critical"
+  },
+  {
+    "id": "cx-006",
+    "propertyName": "Hickory Hollow",
+    "project": "Bargain Hunt HVAC replacements",
+    "category": "Major",
+    "budget": 125000,
+    "actualSpend": 125000,
+    "plannedDate": "2026-01-10",
+    "dueDate": "2026-02-22",
+    "status": "Complete",
+    "priority": "Major"
+  },
+  {
+    "id": "cx-007",
+    "propertyName": "Eighth",
+    "project": "Signage + curb appeal package",
+    "category": "Routine",
+    "budget": 45000,
+    "actualSpend": 12000,
+    "plannedDate": "2026-05-01",
+    "dueDate": "2026-06-05",
+    "status": "Planning",
+    "priority": "Routine"
+  },
+  {
+    "id": "cx-008",
+    "propertyName": "Fessey",
+    "project": "Driveway concrete remediation",
+    "category": "Routine",
+    "budget": 52000,
+    "actualSpend": 7000,
+    "plannedDate": "2026-10-12",
+    "dueDate": "2026-11-16",
+    "status": "Planning",
+    "priority": "Routine"
+  }
+]
