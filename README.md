@@ -7,11 +7,14 @@ Next.js 14 + Supabase dashboard for Anchor Investments, focused on portfolio-lev
 - Portfolio overview with key metrics:
   - total properties
   - average occupancy
-  - count at 100% occupancy
-  - count below 80% occupancy
-- Property cards with occupancy status, first upcoming renewal, and next CapEx item
-- Property detail pages for each asset with sections for Overview, Leasing, CapEx, and Notes
-- Supabase schema for `properties` plus scaffold tables for `tenants`, `leases`, and `loans`
+  - debt balance and debt service
+  - average DSCR, count at 100% occupancy, count below 80% occupancy
+- Property cards with occupancy, renewal/capex highlights, debt summary, and cap rate/DSCR snapshot
+- Property detail pages with asset metrics + debt schedule sections
+- Dedicated views:
+  - `/debt` debt overview sorted by maturity date
+  - `/financial-metrics` portfolio-level NOI/cap rate/DSCR dashboard
+- Supabase schema for `properties`, `asset_metrics`, `debt_schedule`, and scaffold tables for `tenants`, `leases`, and `loans`
 
 ## Prerequisites
 
@@ -29,14 +32,20 @@ npm install
 ```sql
 -- use file contents from
 supabase/migrations/001_initial.sql
+supabase/migrations/002_debt_asset_extension.sql
 ```
 
-3. Seed portfolio data from `data/properties.json`:
+3. Extract debt + asset extension data:
+```bash
+npm run extract:data
+```
+
+4. Seed portfolio and extension data:
 ```bash
 npm run seed
 ```
 
-4. Start the development server:
+5. Start the development server:
 ```bash
 npm run dev
 ```

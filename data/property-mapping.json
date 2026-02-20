@@ -1,0 +1,236 @@
+{
+  "Cumberland": {
+    "existing": "Cumberland",
+    "asset_mgmt_sheet": "Cumberland",
+    "debt_schedule_names": [
+      "Cumberland Square Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Eighth": {
+    "existing": "Eighth",
+    "asset_mgmt_sheet": "Eighth",
+    "debt_schedule_names": [
+      "1700 8th Avenue, LLC"
+    ],
+    "has_debt": true
+  },
+  "Evansville": {
+    "existing": "Evansville",
+    "asset_mgmt_sheet": "Evansville",
+    "debt_schedule_names": [
+      "Evansville Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Fessey": {
+    "existing": "Fessey",
+    "asset_mgmt_sheet": "Fessey",
+    "debt_schedule_names": [
+      "720 Fessey Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Gastonia": {
+    "existing": "Gastonia",
+    "asset_mgmt_sheet": "Gastonia",
+    "debt_schedule_names": [
+      "Gastonia Restoration Partners"
+    ],
+    "has_debt": true
+  },
+  "Hamilton": {
+    "existing": "Hamilton",
+    "asset_mgmt_sheet": "Hamilton",
+    "debt_schedule_names": [
+      "Hamilton Community Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Harrison": {
+    "existing": "Harrison",
+    "asset_mgmt_sheet": "Harrison",
+    "debt_schedule_names": [
+      "Harrison OH Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Hickory Hollow": {
+    "existing": "Hickory Hollow",
+    "asset_mgmt_sheet": "Hickory Hollow",
+    "debt_schedule_names": [
+      "Hickory Hollow Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Highland": {
+    "existing": "Highland",
+    "asset_mgmt_sheet": "Highland",
+    "debt_schedule_names": [
+      "2151 Highland Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Johnson": {
+    "existing": "Johnson",
+    "asset_mgmt_sheet": "Johnson",
+    "debt_schedule_names": [
+      "2008 Johnson Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Lebanon": {
+    "existing": "Lebanon",
+    "asset_mgmt_sheet": "Lebanon",
+    "debt_schedule_names": [
+      "Lebanon Pike Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Madison": {
+    "existing": "Madison",
+    "asset_mgmt_sheet": "Madison",
+    "debt_schedule_names": [
+      "Madison Center Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Malone": {
+    "existing": "Malone",
+    "asset_mgmt_sheet": "Malone",
+    "debt_schedule_names": [
+      "Malone Plaza Partners"
+    ],
+    "has_debt": true
+  },
+  "Maple Row": {
+    "existing": "Maple Row",
+    "asset_mgmt_sheet": "Maple Row",
+    "debt_schedule_names": [
+      "Maple Row Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Meridian": {
+    "existing": "Meridian",
+    "asset_mgmt_sheet": "Meridian",
+    "debt_schedule_names": [
+      "Meridian Springs Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Millington": {
+    "existing": "Millington",
+    "asset_mgmt_sheet": "Millington",
+    "debt_schedule_names": [
+      "Millington Plaza Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Mission Hotels": {
+    "existing": "Mission Hotels",
+    "asset_mgmt_sheet": "Mission Hotels",
+    "debt_schedule_names": [
+      "2518 Gallatin Partners, LLC",
+      "506 Church Partners, LLC",
+      "819 Russell Partners, LLC",
+      "McMinnville Community Partners",
+      "Studio Suites"
+    ],
+    "has_debt": true
+  },
+  "Montgomery": {
+    "existing": "Montgomery",
+    "asset_mgmt_sheet": "Montgomery",
+    "debt_schedule_names": [
+      "Montgomery Community Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "New Memphis": {
+    "existing": "New Memphis",
+    "asset_mgmt_sheet": "New Memphis",
+    "debt_schedule_names": [
+      "516 Tennessee Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Parma Heights": {
+    "existing": "Parma Heights",
+    "asset_mgmt_sheet": "Parma Heights",
+    "debt_schedule_names": [
+      "Parma Heights Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Pea Ridge": {
+    "existing": "Pea Ridge",
+    "asset_mgmt_sheet": "Pea Ridge",
+    "debt_schedule_names": [
+      "Pea Ridge Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Pell City": {
+    "existing": "Pell City",
+    "asset_mgmt_sheet": "Pell City",
+    "debt_schedule_names": [
+      "Pell City Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Russellville": {
+    "existing": "Russellville",
+    "asset_mgmt_sheet": "Russellville",
+    "debt_schedule_names": [
+      "Russellville Community Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Sevierville": {
+    "existing": "Sevierville",
+    "asset_mgmt_sheet": "Sevierville",
+    "debt_schedule_names": [
+      "Sevierville Forks Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Shelbyville": {
+    "existing": "Shelbyville",
+    "asset_mgmt_sheet": "Shelbyville",
+    "debt_schedule_names": [
+      "Shelbyville Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Trousdale": {
+    "existing": "Trousdale",
+    "asset_mgmt_sheet": "Trousdale",
+    "debt_schedule_names": [
+      "3656 Trousdale Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Vann": {
+    "existing": "Vann",
+    "asset_mgmt_sheet": "Vann",
+    "debt_schedule_names": [
+      "1032 Vann Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "Wilson": {
+    "existing": "Wilson",
+    "asset_mgmt_sheet": "Wilson",
+    "debt_schedule_names": [
+      "312 Wilson Pike Partners, LLC"
+    ],
+    "has_debt": true
+  },
+  "_meta": {
+    "generated_at": "2026-02-19T23:29:22.871792+00:00",
+    "unmatched_debt_schedule_names": [
+      "2926 Foster GP"
+    ]
+  }
+}

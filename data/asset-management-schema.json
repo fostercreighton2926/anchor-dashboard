@@ -1,0 +1,59 @@
+{
+  "description": "Asset management metrics by property. Attempts Google Sheet extraction first; falls back to existing properties.json values when auth is unavailable.",
+  "primary_key": [
+    "property_name",
+    "snapshot_date"
+  ],
+  "fields": [
+    {
+      "name": "property_name",
+      "type": "string"
+    },
+    {
+      "name": "snapshot_date",
+      "type": "date"
+    },
+    {
+      "name": "occupancy_percent",
+      "type": "number|null",
+      "description": "0-1 fraction"
+    },
+    {
+      "name": "noi_ttm",
+      "type": "number|null"
+    },
+    {
+      "name": "cap_rate",
+      "type": "number|null"
+    },
+    {
+      "name": "avg_psf",
+      "type": "number|null"
+    },
+    {
+      "name": "market_psf",
+      "type": "number|null"
+    },
+    {
+      "name": "dscr",
+      "type": "number|null"
+    },
+    {
+      "name": "source_sheet",
+      "type": "string"
+    },
+    {
+      "name": "source_status",
+      "type": "string"
+    },
+    {
+      "name": "raw_payload",
+      "type": "object"
+    }
+  ],
+  "stats": {
+    "properties": 28,
+    "google_sheet_extracted": 0,
+    "fallback_count": 28
+  }
+}

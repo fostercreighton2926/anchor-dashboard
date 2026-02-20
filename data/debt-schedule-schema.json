@@ -1,0 +1,76 @@
+{
+  "description": "Debt schedule extracted from debt-schedule.xlsx Summary tab (rows 4-36)",
+  "primary_key": "external_loan_key",
+  "fields": [
+    {
+      "name": "external_loan_key",
+      "type": "string",
+      "example": "debt-summary-r4"
+    },
+    {
+      "name": "property_name",
+      "type": "string|null",
+      "description": "Mapped to properties.property_name"
+    },
+    {
+      "name": "source_property_name",
+      "type": "string"
+    },
+    {
+      "name": "loan_name",
+      "type": "string"
+    },
+    {
+      "name": "lender",
+      "type": "string"
+    },
+    {
+      "name": "loan_type",
+      "type": "string|null"
+    },
+    {
+      "name": "loan_balance",
+      "type": "number|null"
+    },
+    {
+      "name": "debt_service",
+      "type": "number|null"
+    },
+    {
+      "name": "dsc_market",
+      "type": "number|null"
+    },
+    {
+      "name": "dsc_budget",
+      "type": "number|null"
+    },
+    {
+      "name": "dsc_requirement",
+      "type": "number|null"
+    },
+    {
+      "name": "monthly_payment",
+      "type": "number|null"
+    },
+    {
+      "name": "interest_rate",
+      "type": "number|null"
+    },
+    {
+      "name": "maturity_date",
+      "type": "date|null"
+    },
+    {
+      "name": "origination_date",
+      "type": "date|null"
+    },
+    {
+      "name": "notes",
+      "type": "string|null"
+    }
+  ],
+  "stats": {
+    "loan_count": 33,
+    "unmapped_loans": 1
+  }
+}

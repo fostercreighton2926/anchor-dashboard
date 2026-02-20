@@ -1,0 +1,450 @@
+[
+  {
+    "property_name": "Cumberland",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Cumberland",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Eighth",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Eighth",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Evansville",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.54,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Evansville",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Fessey",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Fessey",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Gastonia",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.9273,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Gastonia",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Hamilton",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.8157,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Hamilton",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Harrison",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.6353,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Harrison",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Hickory Hollow",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Hickory Hollow",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Highland",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.8,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Highland",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Johnson",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Johnson",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Lebanon",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Lebanon",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Madison",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Madison",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Malone",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.1594,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Malone",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Maple Row",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Maple Row",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Meridian",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": 8.31,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Meridian",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Millington",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.9858,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Millington",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Mission Hotels",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": null,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Mission Hotels",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Montgomery",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.89,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Montgomery",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "New Memphis",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.6117,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": 20.08,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "New Memphis",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Parma Heights",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Parma Heights",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Pea Ridge",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.96,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Pea Ridge",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Pell City",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.9422,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Pell City",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Russellville",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.8288,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Russellville",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Sevierville",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Sevierville",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Shelbyville",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Shelbyville",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Trousdale",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Trousdale",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Vann",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 1.0,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": null,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Vann",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  },
+  {
+    "property_name": "Wilson",
+    "snapshot_date": "2026-02-19",
+    "occupancy_percent": 0.7021,
+    "noi_ttm": null,
+    "cap_rate": null,
+    "avg_psf": 17.56,
+    "market_psf": null,
+    "dscr": null,
+    "source_sheet": "Wilson",
+    "source_status": "properties_json_fallback",
+    "notes": null,
+    "raw_payload": {
+      "extracted_from_grid": false
+    }
+  }
+]

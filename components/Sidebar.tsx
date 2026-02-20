@@ -15,6 +15,18 @@ export default function Sidebar() {
         >
           Portfolio Overview
         </Link>
+        <Link
+          href="/debt"
+          className="mt-3 block rounded-lg border border-slate-800 bg-slate-900/60 px-4 py-3 text-sm font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+        >
+          Debt Overview
+        </Link>
+        <Link
+          href="/financial-metrics"
+          className="mt-3 block rounded-lg border border-slate-800 bg-slate-900/60 px-4 py-3 text-sm font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+        >
+          Financial Metrics
+        </Link>
       </nav>
 
       <div className="border-t border-slate-800 px-6 py-4 text-xs text-slate-500">

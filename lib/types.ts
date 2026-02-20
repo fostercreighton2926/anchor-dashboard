@@ -20,12 +20,80 @@ export interface Property {
   updated_at: string
 }
 
+export interface AssetMetric {
+  id: string
+  property_id: string
+  snapshot_date: string
+  occupancy_percent: number | null
+  noi_ttm: number | null
+  cap_rate: number | null
+  avg_psf: number | null
+  market_psf: number | null
+  dscr: number | null
+  notes: string | null
+  source_sheet: string | null
+  source_status: string
+  raw_payload: Record<string, unknown> | null
+  created_at: string
+  updated_at: string
+}
+
+export interface DebtLoan {
+  id: string
+  property_id: string | null
+  external_loan_key: string
+  source_property_name: string
+  loan_name: string
+  lender: string | null
+  loan_type: string | null
+  square_feet: number | null
+  base_rent: number | null
+  additional_rent: number | null
+  total_rent: number | null
+  recoverable_opex_psf: number | null
+  total_recoverable_opex: number | null
+  opex_2025: number | null
+  noi_today: number | null
+  noi_budget: number | null
+  loan_balance: number | null
+  debt_service: number | null
+  dsc_market: number | null
+  dsc_budget: number | null
+  dsc_requirement: number | null
+  cash_flow: number | null
+  as_of_825: number | null
+  monthly_payment: number | null
+  interest_rate: number | null
+  interest_rate_label: string | null
+  rate_margin: string | null
+  current_rate: number | null
+  maturity_date: string | null
+  origination_date: string | null
+  notes: string | null
+  ml_notes: string | null
+  eli_notes: string | null
+  raw_payload: Record<string, unknown> | null
+  created_at: string
+  updated_at: string
+}
+
 export function slugify(name: string): string {
   return name
     .toLowerCase()
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
+}
+
+export function formatPercent(value: number | null, decimals = 1): string {
+  if (value === null || !Number.isFinite(value)) return 'N/A'
+  const normalized = value <= 1 ? value * 100 : value
+  return `${normalized.toFixed(decimals)}%`
+}
+
+export function formatCurrency(value: number | null): string {
+  if (value === null || !Number.isFinite(value)) return 'N/A'
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value)
 }
 
 export function parseOccupancy(rate: string | null): number | null {
