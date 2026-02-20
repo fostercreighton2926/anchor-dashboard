@@ -132,9 +132,8 @@ export default function ExecutiveOverviewClient({
       </section>
 
       <section className="flex flex-wrap gap-3">
-        <Link href="/debt" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📅 View Debt Maturity Timeline</Link>
-        <Link href="/capex" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">🔧 View CapEx Schedule</Link>
-        <Link href="/financial-metrics" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📊 Financial Metrics Dashboard</Link>
+        <Link href="/annual-property-reviews" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📘 Open Annual Property Reviews</Link>
+        <Link href="/" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📊 Open Operational Dashboard</Link>
       </section>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">

@@ -2,10 +2,7 @@ import Link from 'next/link'
 
 const links = [
   { href: '/', label: '📊 2026 Operational Dashboard' },
-  { href: '/business-plans', label: '📘 Business Plans (Annual Reviews)' },
-  { href: '/debt', label: '🏦 Debt Overview' },
-  { href: '/capex', label: '🔧 CapEx Schedule' },
-  { href: '/financial-metrics', label: '📈 Financial Metrics' },
+  { href: '/annual-property-reviews', label: '📘 Annual Property Reviews' },
 ]
 
 export default function Sidebar() {
