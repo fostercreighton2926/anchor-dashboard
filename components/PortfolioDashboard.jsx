@@ -157,7 +157,7 @@ export default function PortfolioDashboard() {
   const prop = selectedProp ? properties.find(p => p.name === selectedProp) : null;
 
   return (
-    <div style={{ background:"#f5f5f7", minHeight:"100vh", color:"#0f172a", fontFamily:"'DM Sans', sans-serif" }}>
+    <div style={{ background:"#fafafa", minHeight:"100vh", color:"#0f172a", fontFamily:"'DM Sans', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
 
       {/* ── HEADER ── */}
@@ -165,11 +165,11 @@ export default function PortfolioDashboard() {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20 }}>
           <div>
             <h1 style={{ fontSize:32, fontWeight:700, margin:0, fontFamily:"'Playfair Display', serif", color:"#f8fafc" }}>Portfolio Dashboard</h1>
-            <div style={{ fontSize:13, color:"#64748b", marginTop:4 }}>2026 Strategic Overview · {properties.length} Properties · As of February 18, 2026</div>
+            <div style={{ fontSize:13, color:"#e2e8f0", marginTop:4 }}>2026 Strategic Overview · {properties.length} Properties · As of February 18, 2026</div>
           </div>
           <div style={{ textAlign:"right" }}>
-            <div style={{ fontSize:11, color:"#64748b" }}>PRIME: 6.75% · SOFR (30D): 3.65%</div>
-            <div style={{ fontSize:11, color:"#64748b", marginTop:2 }}>Prepared for CEO Review</div>
+            <div style={{ fontSize:11, color:"#e2e8f0" }}>PRIME: 6.75% · SOFR (30D): 3.65%</div>
+            <div style={{ fontSize:11, color:"#e2e8f0", marginTop:2 }}>Prepared for CEO Review</div>
           </div>
         </div>
 
@@ -179,8 +179,8 @@ export default function PortfolioDashboard() {
             <button key={n.id} onClick={() => { setView(n.id); setSelectedProp(null); }}
               style={{
                 padding:"8px 20px", borderRadius:8, border:"none", cursor:"pointer", fontSize:13, fontWeight:600,
-                background: view === n.id ? "rgba(122,154,138,0.18)" : "transparent",
-                color: view === n.id ? "#456255" : "#64748b",
+                background: view === n.id ? "rgba(255,255,255,0.30)" : "rgba(255,255,255,0.12)",
+                color: "#ffffff",
                 transition:"all 0.2s"
               }}>
               {n.label}

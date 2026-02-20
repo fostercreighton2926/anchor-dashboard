@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import AlertBanner from '@/components/AlertBanner'
 import PropertyCard from '@/components/PropertyCard'
 import StatCard from '@/components/StatCard'
 import { BarChartCard, PieChartCard } from '@/components/charts/SimpleCharts'
@@ -31,7 +30,6 @@ function formatCurrency(value: number): string {
 export default function ExecutiveOverviewClient({
   stats,
   rows,
-  alerts,
 }: {
   stats: {
     portfolioValue: number
@@ -41,11 +39,6 @@ export default function ExecutiveOverviewClient({
     occupancy: number | null
   }
   rows: RollupView[]
-  alerts: {
-    debtSoon: string[]
-    dscrConcern: string[]
-    capexSoon: string[]
-  }
 }) {
   const [sortMode, setSortMode] = useState<'alphabetical' | 'highestNoi' | 'lowestDscr'>('alphabetical')
   const [compositionMode, setCompositionMode] = useState<'value' | 'sf'>('value')
@@ -86,8 +79,8 @@ export default function ExecutiveOverviewClient({
   return (
     <div className="space-y-6 px-4 py-6 md:px-8 md:py-8">
       <header>
-        <h1 className="text-2xl font-semibold text-white md:text-3xl">📊 Executive Overview</h1>
-        <p className="mt-1 text-sm text-slate-400">Visual portfolio health across debt, NOI, occupancy, and CapEx.</p>
+        <h1 className="text-2xl font-semibold text-slate-900 md:text-3xl">📊 Executive Overview</h1>
+        <p className="mt-1 text-sm text-slate-600">Visual portfolio health across debt, NOI, occupancy, and CapEx.</p>
       </header>
 
       <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -95,12 +88,6 @@ export default function ExecutiveOverviewClient({
         <StatCard emoji="💰" label="Total Annual NOI" value={formatCurrency(stats.annualNoi)} trend={stats.annualNoi > 0 ? 'up' : 'flat'} trendLabel="Income engine" tone={stats.annualNoi > 0 ? 'green' : 'yellow'} />
         <StatCard emoji="🏦" label="Total Debt Exposure" value={formatCurrency(stats.totalDebt)} trend="flat" trendLabel={`Weighted DSCR ${stats.weightedDscr?.toFixed(2) ?? 'N/A'}`} tone={debtTone} />
         <StatCard emoji="👥" label="Portfolio Occupancy" value={`${stats.occupancy?.toFixed(1) ?? 'N/A'}%`} trend="flat" trendLabel="Weighted average" tone={occTone} />
-      </section>
-
-      <section className="space-y-3">
-        <AlertBanner title="Debt maturing in <6 months" items={alerts.debtSoon} tone="red" icon="🚨" />
-        <AlertBanner title="Properties with DSCR <1.3" items={alerts.dscrConcern} tone="yellow" icon="⚠️" />
-        <AlertBanner title="Major CapEx due in next 90 days" items={alerts.capexSoon} tone="blue" icon="🔧" />
       </section>
 
       <section className="grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -115,11 +102,11 @@ export default function ExecutiveOverviewClient({
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-100">Portfolio Composition</h3>
+              <h3 className="text-sm font-semibold text-slate-900">Portfolio Composition</h3>
               <button
-                className="rounded-lg border border-slate-700 px-2 py-1 text-xs text-slate-300 hover:border-slate-500"
+                className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-700 hover:border-[#7A9A8A]/40 hover:bg-[#7A9A8A]/10"
                 onClick={() => setCompositionMode((prev) => (prev === 'value' ? 'sf' : 'value'))}
               >
                 Toggle: {compositionMode}
@@ -132,8 +119,8 @@ export default function ExecutiveOverviewClient({
       </section>
 
       <section className="flex flex-wrap gap-3">
-        <Link href="/annual-property-reviews" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📘 Open Annual Property Reviews</Link>
-        <Link href="/" className="rounded-xl border border-blue-500/50 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">📊 Open Operational Dashboard</Link>
+        <Link href="/annual-property-reviews" className="rounded-xl border border-[#7A9A8A]/45 bg-white px-4 py-2 text-sm text-[#456255] shadow-sm transition hover:bg-[#7A9A8A]/10">📘 Open Annual Property Reviews</Link>
+        <Link href="/" className="rounded-xl border border-[#7A9A8A]/45 bg-white px-4 py-2 text-sm text-[#456255] shadow-sm transition hover:bg-[#7A9A8A]/10">📊 Open Operational Dashboard</Link>
       </section>
 
       <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">

@@ -15,8 +15,8 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex md:w-72 md:flex-col md:border-r md:border-slate-200 md:bg-slate-50/95">
       <div className="border-b border-slate-200 px-6 py-8">
-        <div className="mb-3 flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-          <Image src="/anchor-icon.jpg" alt="Anchor icon" width={28} height={28} className="h-7 w-7 object-contain" priority />
+        <div className="mb-4 flex h-16 w-48 items-center overflow-hidden rounded-xl border border-slate-200 bg-white px-3 shadow-sm">
+          <Image src="/anchor-logo.jpg" alt="Anchor Investments logo" width={220} height={56} className="h-12 w-auto object-contain" priority />
         </div>
         <h1 className="text-xl font-semibold text-slate-900">Portfolio Command Center</h1>
       </div>

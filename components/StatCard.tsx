@@ -1,17 +1,17 @@
 import { HealthTone } from '@/lib/health'
 
 function toneBorder(tone: HealthTone): string {
-  if (tone === 'green') return 'border-emerald-500/60'
-  if (tone === 'yellow') return 'border-amber-500/60'
-  if (tone === 'red') return 'border-red-500/60'
-  return 'border-blue-500/60'
+  if (tone === 'green') return 'border-emerald-200'
+  if (tone === 'yellow') return 'border-amber-200'
+  if (tone === 'red') return 'border-red-200'
+  return 'border-[#7A9A8A]/35'
 }
 
 function toneText(tone: HealthTone): string {
-  if (tone === 'green') return 'text-emerald-300'
-  if (tone === 'yellow') return 'text-amber-300'
-  if (tone === 'red') return 'text-red-300'
-  return 'text-blue-300'
+  if (tone === 'green') return 'text-emerald-700'
+  if (tone === 'yellow') return 'text-amber-700'
+  if (tone === 'red') return 'text-red-700'
+  return 'text-[#456255]'
 }
 
 export default function StatCard({
@@ -32,9 +32,9 @@ export default function StatCard({
   const trendSymbol = trend === 'up' ? '📈' : trend === 'down' ? '📉' : '⏸️'
 
   return (
-    <div className={`rounded-2xl border bg-slate-900/80 p-4 shadow-sm ${toneBorder(tone)}`}>
-      <p className="text-xs uppercase tracking-wide text-slate-400">{emoji} {label}</p>
-      <p className="mt-2 text-2xl font-semibold text-slate-100">{value}</p>
+    <div className={`rounded-2xl border bg-white p-4 shadow-sm ${toneBorder(tone)}`}>
+      <p className="text-xs uppercase tracking-wide text-slate-500">{emoji} {label}</p>
+      <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>
       {trendLabel ? (
         <p className={`mt-2 text-xs font-medium ${toneText(tone)}`}>
           {trendSymbol} {trendLabel}

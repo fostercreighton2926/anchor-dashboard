@@ -1,10 +1,10 @@
 import { HealthTone } from '@/lib/health'
 
 function toneClasses(tone: HealthTone): string {
-  if (tone === 'green') return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-  if (tone === 'yellow') return 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-  if (tone === 'red') return 'bg-red-500/20 text-red-300 border border-red-500/40'
-  return 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
+  if (tone === 'green') return 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+  if (tone === 'yellow') return 'border border-amber-200 bg-amber-50 text-amber-700'
+  if (tone === 'red') return 'border border-red-200 bg-red-50 text-red-700'
+  return 'border border-[#7A9A8A]/35 bg-[#7A9A8A]/10 text-[#456255]'
 }
 
 export default function HealthBadge({
