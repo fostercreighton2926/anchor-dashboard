@@ -49,7 +49,7 @@ export default function FinancialMetricsClient({ rows }: { rows: MetricRow[] }) 
     x: Math.max(1, row.debtService),
     y: Math.max(1, row.noi),
     label: row.propertyName,
-    color: row.dscr !== null && row.dscr < 1.25 ? '#ef4444' : row.dscr !== null && row.dscr < 1.5 ? '#f59e0b' : '#10b981',
+    color: row.dscr !== null && row.dscr < 1.25 ? '#ef4444' : row.dscr !== null && row.dscr < 1.5 ? '#f59e0b' : '#7A9A8A',
   }))
 
   const occupancyTrend = rows
@@ -60,8 +60,8 @@ export default function FinancialMetricsClient({ rows }: { rows: MetricRow[] }) 
     <div className="px-4 py-6 md:px-8 md:py-8">
       <header className="mb-6 flex items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold text-white md:text-3xl">📈 Financial Metrics</h1>
-          <p className="mt-2 text-sm text-slate-400">Portfolio-level performance and property comparison.</p>
+          <h1 className="text-2xl font-semibold text-anchor-text md:text-3xl">📈 Financial Metrics</h1>
+          <p className="mt-2 text-sm text-anchor-muted">Portfolio-level performance and property comparison.</p>
         </div>
       </header>
 
@@ -80,11 +80,11 @@ export default function FinancialMetricsClient({ rows }: { rows: MetricRow[] }) 
         <LineChartCard title="Occupancy Snapshot Trend" data={occupancyTrend} />
       </section>
 
-      <section className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+      <section className="overflow-x-auto rounded-2xl border border-anchor-border bg-white p-4">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-100">Property Comparison</h2>
+          <h2 className="text-sm font-semibold text-anchor-text">Property Comparison</h2>
           <select
-            className="rounded-lg border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-200"
+            className="rounded-lg border border-anchor-border bg-white px-2 py-1 text-xs text-anchor-body"
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as 'property' | 'noi' | 'dscr' | 'occupancy')}
           >
@@ -96,7 +96,7 @@ export default function FinancialMetricsClient({ rows }: { rows: MetricRow[] }) 
         </div>
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-700 text-left text-slate-400">
+            <tr className="border-b border-anchor-border text-left text-anchor-muted">
               <th className="py-2">🏢 Property</th>
               <th className="py-2">💰 NOI</th>
               <th className="py-2">📊 Cap Rate</th>
@@ -111,7 +111,7 @@ export default function FinancialMetricsClient({ rows }: { rows: MetricRow[] }) 
               const dscrHealth = getDscrHealth(row.dscr)
               const occHealth = getOccupancyHealth(row.occupancy)
               return (
-                <tr key={row.id} className="border-b border-slate-800 text-slate-200">
+                <tr key={row.id} className="border-b border-anchor-border text-anchor-body">
                   <td className="py-2">
                     <div className="flex items-center gap-2">
                       <GaugeChart value={row.occupancy} label="" size={44} />
@@ -124,7 +124,7 @@ export default function FinancialMetricsClient({ rows }: { rows: MetricRow[] }) 
                   <td className="py-2"><HealthBadge tone={occHealth.tone} label={row.occupancy ? `${row.occupancy.toFixed(1)}%` : 'N/A'} emoji={occHealth.emoji} /></td>
                   <td className="py-2">{formatCurrency(row.cashFlow)}</td>
                   <td className="py-2">
-                    <Link href={`/properties/${row.slug}`} className="rounded-lg border border-blue-500/50 bg-blue-500/10 px-2 py-1 text-xs text-blue-200">View Details</Link>
+                    <Link href={`/properties/${row.slug}`} className="rounded-lg border border-anchor-primary/40 bg-anchor-primary/10 px-2 py-1 text-xs text-anchor-primaryDark">View Details</Link>
                   </td>
                 </tr>
               )

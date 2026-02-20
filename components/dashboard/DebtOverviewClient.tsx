@@ -92,8 +92,8 @@ export default function DebtOverviewClient({ loans }: { loans: DebtViewRow[] }) 
   return (
     <div className="px-4 py-6 md:px-8 md:py-8">
       <header className="mb-6">
-        <h1 className="text-2xl font-semibold text-white md:text-3xl">🏦 Debt Overview</h1>
-        <p className="mt-2 text-sm text-slate-400">Timeline visualization and refinancing priority queue</p>
+        <h1 className="text-2xl font-semibold text-anchor-text md:text-3xl">🏦 Debt Overview</h1>
+        <p className="mt-2 text-sm text-anchor-muted">Timeline visualization and refinancing priority queue</p>
       </header>
 
       <section className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -104,26 +104,26 @@ export default function DebtOverviewClient({ loans }: { loans: DebtViewRow[] }) 
       </section>
 
       <section className="mb-6 grid grid-cols-1 gap-4 xl:grid-cols-[300px_1fr]">
-        <aside className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
-          <p className="text-sm font-semibold text-slate-100">Filters</p>
+        <aside className="rounded-2xl border border-anchor-border bg-white p-4">
+          <p className="text-sm font-semibold text-anchor-text">Filters</p>
           <div className="mt-3 space-y-3 text-sm">
-            <label className="block text-slate-400">Property
-              <select className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-2 text-slate-200" value={propertyFilter} onChange={(e) => setPropertyFilter(e.target.value)}>
+            <label className="block text-anchor-muted">Property
+              <select className="mt-1 w-full rounded-lg border border-anchor-border bg-white px-2 py-2 text-anchor-body" value={propertyFilter} onChange={(e) => setPropertyFilter(e.target.value)}>
                 {properties.map((item) => <option key={item}>{item}</option>)}
               </select>
             </label>
-            <label className="block text-slate-400">Lender
-              <select className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-2 text-slate-200" value={lenderFilter} onChange={(e) => setLenderFilter(e.target.value)}>
+            <label className="block text-anchor-muted">Lender
+              <select className="mt-1 w-full rounded-lg border border-anchor-border bg-white px-2 py-2 text-anchor-body" value={lenderFilter} onChange={(e) => setLenderFilter(e.target.value)}>
                 {lenders.map((item) => <option key={item}>{item}</option>)}
               </select>
             </label>
-            <label className="block text-slate-400">Maturity Year
-              <select className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-2 text-slate-200" value={yearFilter} onChange={(e) => setYearFilter(e.target.value)}>
+            <label className="block text-anchor-muted">Maturity Year
+              <select className="mt-1 w-full rounded-lg border border-anchor-border bg-white px-2 py-2 text-anchor-body" value={yearFilter} onChange={(e) => setYearFilter(e.target.value)}>
                 {years.map((item) => <option key={item}>{item}</option>)}
               </select>
             </label>
-            <label className="block text-slate-400">Scope
-              <select className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-2 py-2 text-slate-200" value={scope} onChange={(e) => setScope(e.target.value as 'all' | 'due12' | 'troubled')}>
+            <label className="block text-anchor-muted">Scope
+              <select className="mt-1 w-full rounded-lg border border-anchor-border bg-white px-2 py-2 text-anchor-body" value={scope} onChange={(e) => setScope(e.target.value as 'all' | 'due12' | 'troubled')}>
                 <option value="all">all</option>
                 <option value="due12">due in 12mo</option>
                 <option value="troubled">troubled (DSCR &lt; 1.3)</option>
@@ -135,11 +135,11 @@ export default function DebtOverviewClient({ loans }: { loans: DebtViewRow[] }) 
         <TimelineChart title="Debt Maturity Timeline (0-10 years)" rows={timelineRows} />
       </section>
 
-      <section className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
-        <h2 className="mb-3 text-sm font-semibold text-slate-100">⚠️ Refinancing Priority Queue</h2>
+      <section className="overflow-x-auto rounded-2xl border border-anchor-border bg-white p-4">
+        <h2 className="mb-3 text-sm font-semibold text-anchor-text">⚠️ Refinancing Priority Queue</h2>
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-700 text-left text-slate-400">
+            <tr className="border-b border-anchor-border text-left text-anchor-muted">
               <th className="py-2">🏢 Property</th>
               <th className="py-2">🏦 Lender</th>
               <th className="py-2">💰 Balance</th>
@@ -152,7 +152,7 @@ export default function DebtOverviewClient({ loans }: { loans: DebtViewRow[] }) 
             {filtered.map((loan) => {
               const health = getDscrHealth(loan.dscr)
               return (
-                <tr key={loan.id} className="border-b border-slate-800 text-slate-200">
+                <tr key={loan.id} className="border-b border-anchor-border text-anchor-body">
                   <td className="py-2">{loan.property}</td>
                   <td className="py-2">{loan.lender}</td>
                   <td className="py-2">{formatCurrency(loan.balance)}</td>

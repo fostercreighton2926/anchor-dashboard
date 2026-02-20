@@ -50,14 +50,14 @@ export default function PropertyCard({
   return (
     <Link
       href={`/properties/${slugify(property.property_name)}`}
-      className="group rounded-2xl border border-slate-800 bg-slate-900/70 p-4 transition hover:border-blue-500/50 hover:bg-slate-900"
+      className="group rounded-2xl border border-anchor-border bg-white p-4 transition hover:border-anchor-primary/50 hover:bg-anchor-cream"
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
-          <div className="mb-2 flex h-16 w-full items-center justify-center rounded-xl border border-slate-700 bg-gradient-to-br from-slate-800 to-slate-900 text-2xl">
+          <div className="mb-2 flex h-16 w-full items-center justify-center rounded-xl border border-anchor-border bg-gradient-to-br from-anchor-cream to-white text-2xl">
             🏢
           </div>
-          <h3 className="text-lg font-semibold text-slate-100">{property.property_name}</h3>
+          <h3 className="text-lg font-semibold text-anchor-text">{property.property_name}</h3>
         </div>
         <GaugeChart value={occupancy} label="Occupancy" size={78} />
       </div>
@@ -67,26 +67,26 @@ export default function PropertyCard({
         <HealthBadge tone={dscrHealth.tone} label={`DSCR ${assetSummary?.dscr?.toFixed(2) ?? 'N/A'}`} emoji="🏦" />
       </div>
 
-      <div className="grid grid-cols-2 gap-3 border-t border-slate-800 pt-3 text-sm">
+      <div className="grid grid-cols-2 gap-3 border-t border-anchor-border pt-3 text-sm">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">NOI</p>
-          <p className="mt-1 text-slate-200">{formatCurrency(assetSummary?.noiTtm ?? null)}</p>
+          <p className="text-xs uppercase tracking-wide text-anchor-muted">NOI</p>
+          <p className="mt-1 text-anchor-body">{formatCurrency(assetSummary?.noiTtm ?? null)}</p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">Debt</p>
-          <p className="mt-1 text-slate-200">{formatCurrency(debtSummary?.totalLoanBalance ?? null)}</p>
+          <p className="text-xs uppercase tracking-wide text-anchor-muted">Debt</p>
+          <p className="mt-1 text-anchor-body">{formatCurrency(debtSummary?.totalLoanBalance ?? null)}</p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">Cap Rate</p>
-          <p className="mt-1 text-slate-200">{formatPercent(assetSummary?.capRate ?? null, 2)}</p>
+          <p className="text-xs uppercase tracking-wide text-anchor-muted">Cap Rate</p>
+          <p className="mt-1 text-anchor-body">{formatPercent(assetSummary?.capRate ?? null, 2)}</p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">Maturity</p>
-          <p className="mt-1 text-slate-200">⏰ {countdown(debtSummary?.nextMaturityDate ?? null)}</p>
+          <p className="text-xs uppercase tracking-wide text-anchor-muted">Maturity</p>
+          <p className="mt-1 text-anchor-body">⏰ {countdown(debtSummary?.nextMaturityDate ?? null)}</p>
         </div>
       </div>
 
-      <p className="mt-3 rounded-lg border border-slate-800 bg-slate-950/50 px-3 py-2 text-xs text-slate-300">
+      <p className="mt-3 rounded-lg border border-anchor-border bg-anchor-cream px-3 py-2 text-xs text-anchor-body">
         🔧 Next CapEx: {nextCapex ?? 'Not scheduled'}
       </p>
     </Link>

@@ -9,17 +9,17 @@ export interface HealthResult {
 }
 
 function toneToTailwind(tone: HealthTone): string {
-  if (tone === 'green') return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+  if (tone === 'green') return 'bg-anchor-primary/15 text-anchor-primaryDark border border-anchor-primary/40'
   if (tone === 'yellow') return 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
   if (tone === 'red') return 'bg-red-500/20 text-red-300 border border-red-500/40'
-  return 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
+  return 'bg-anchor-primary/15 text-anchor-primaryDark border border-anchor-primary/40'
 }
 
 function toneToSubtleTailwind(tone: HealthTone): string {
-  if (tone === 'green') return 'border-emerald-500/40 bg-emerald-500/10'
+  if (tone === 'green') return 'border-anchor-primary/40 bg-anchor-primary/10'
   if (tone === 'yellow') return 'border-amber-500/40 bg-amber-500/10'
   if (tone === 'red') return 'border-red-500/40 bg-red-500/10'
-  return 'border-blue-500/40 bg-blue-500/10'
+  return 'border-anchor-primary/40 bg-anchor-primary/10'
 }
 
 export function getDscrHealth(value: number | null): HealthResult {

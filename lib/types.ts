@@ -105,8 +105,8 @@ export function parseOccupancy(rate: string | null): number | null {
 
 export function occupancyBadge(rate: string | null): string {
   const pct = parseOccupancy(rate)
-  if (pct === null) return 'bg-slate-700 text-slate-200 border border-slate-600'
-  if (pct >= 100) return 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
+  if (pct === null) return 'bg-anchor-border text-anchor-body border border-anchor-border'
+  if (pct >= 100) return 'bg-anchor-primary/15 text-anchor-primaryDark border border-anchor-primary/40'
   if (pct >= 80) return 'bg-amber-500/20 text-amber-300 border border-amber-400/40'
   return 'bg-rose-500/20 text-rose-300 border border-rose-400/40'
 }

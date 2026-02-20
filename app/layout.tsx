@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
 
@@ -10,13 +11,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="font-sans">
+      <body className="font-sans bg-anchor-cream text-anchor-body">
         <div className="min-h-screen md:flex">
           <Sidebar />
           <main className="flex-1">
-            <header className="border-b border-slate-800 bg-slate-950/80 px-4 py-4 backdrop-blur md:hidden">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Anchor Investments</p>
-              <p className="mt-1 text-base font-semibold text-white">Portfolio Command Center</p>
+            <header className="border-b border-anchor-border bg-white px-4 py-4 md:hidden">
+              <Image
+                src="/anchor-logo.jpg"
+                alt="Anchor Investments"
+                width={220}
+                height={44}
+                className="h-auto w-auto max-w-[220px]"
+                priority
+              />
+              <p className="mt-2 text-sm font-heading text-anchor-text">Portfolio Command Center</p>
             </header>
             {children}
           </main>
