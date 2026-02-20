@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="min-h-screen md:flex">
           <Sidebar />
           <main className="flex-1">
-            <header className="border-b border-slate-800 bg-slate-950/80 px-4 py-4 backdrop-blur md:hidden">
+            <header className="border-b border-slate-200 bg-slate-50/90 px-4 py-4 backdrop-blur md:hidden">
               <div className="h-8 w-36 overflow-hidden">
                 <Image
                   src="/anchor-logo.jpg"
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   priority
                 />
               </div>
-              <p className="mt-1 text-base font-semibold text-white">Portfolio Command Center</p>
+              <p className="mt-1 text-base font-semibold text-slate-900">Portfolio Command Center</p>
             </header>
             {children}
           </main>
