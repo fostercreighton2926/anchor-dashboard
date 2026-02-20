@@ -59,8 +59,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
   return (
     <div className="px-4 py-6 md:px-8 md:py-8">
-      <Link href="/" className="inline-flex items-center rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm text-slate-300 hover:border-slate-500 hover:text-white">
-        Back to portfolio
+      <Link href="/business-plans" className="inline-flex items-center rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm text-slate-300 hover:border-slate-500 hover:text-white">
+        Back to business plans
       </Link>
 
       <div className="mt-4">
