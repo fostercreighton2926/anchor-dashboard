@@ -133,8 +133,8 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
     : debtLoans
 
   return (
-    <div className="px-4 py-6 md:px-8 md:py-8">
-      <Link href="/annual-property-reviews" className="inline-flex items-center rounded-lg border border-[#7A9A8A]/45 bg-white px-3 py-2 text-sm text-[#456255] shadow-sm transition hover:bg-[#7A9A8A]/10">
+    <div className="bg-slate-50 px-4 py-6 md:px-8 md:py-8">
+      <Link href="/annual-property-reviews" className="inline-flex items-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-[#7A9A8A]/45 hover:bg-[#7A9A8A]/10">
         Back to annual property reviews
       </Link>
 

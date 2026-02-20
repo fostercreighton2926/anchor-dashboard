@@ -97,7 +97,7 @@ export default function PropertyDetailTabs({
             key={tab}
             className={`rounded-lg border px-3 py-2 text-sm ${
               activeTab === tab
-                ? 'border-[#7A9A8A]/45 bg-[#7A9A8A]/18 text-[#2f473c]'
+                ? 'border-[#7A9A8A] bg-[#7A9A8A] text-white'
                 : 'border-slate-200 bg-white text-slate-700 hover:border-[#7A9A8A]/35 hover:bg-[#7A9A8A]/8'
             }`}
             onClick={() => setActiveTab(tab)}

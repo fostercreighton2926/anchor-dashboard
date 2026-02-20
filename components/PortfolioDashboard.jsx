@@ -337,51 +337,67 @@ export default function PortfolioDashboard() {
         {/* ════════════════════ PROPERTY DETAIL ════════════════════ */}
         {selectedProp && prop && (
           <div>
-            <button onClick={() => setSelectedProp(null)} style={{ background:"rgba(122,154,138,0.16)", color:"#456255", border:"none", borderRadius:8, padding:"8px 16px", cursor:"pointer", fontSize:13, fontWeight:600, marginBottom:20 }}>
+            <button
+              onClick={() => setSelectedProp(null)}
+              style={{
+                background:"#ffffff",
+                color:"#334155",
+                border:"1px solid rgba(15,23,42,0.15)",
+                borderRadius:8,
+                padding:"8px 16px",
+                cursor:"pointer",
+                fontSize:13,
+                fontWeight:600,
+                marginBottom:20,
+                boxShadow:"0 1px 2px rgba(15,23,42,0.06)",
+              }}
+            >
               ← Back to {view === "overview" ? "Overview" : view === "properties" ? "Properties" : view === "debt" ? "Debt" : view === "cashflow" ? "Cash Flow" : "Refi"}
             </button>
-            <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
-              <h2 style={{ fontSize:28, fontWeight:700, margin:0, fontFamily:"'Playfair Display', serif" }}>{prop.name}</h2>
-              <StatusBadge status={prop.status} />
-              <span style={{ fontSize:13, color:"#64748b" }}>{prop.city}</span>
-            </div>
-
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
-              <KPICard label="Occupancy" value={prop.occupancy < 0 ? "N/A" : prop.occupancy + "%"} accent={prop.occupancy < 0 ? "#94a3b8" : prop.occupancy < 70 ? "#dc2626" : prop.occupancy < 90 ? "#eab308" : "#16a34a"} />
-              <KPICard label="2026 Cash Flow" value={fmtFull(prop.cf2026)} accent={prop.cf2026 >= 0 ? "#16a34a" : "#dc2626"} />
-              <KPICard label="DSC" value={prop.dsc.toFixed(2) + "x"} accent={prop.dsc < 1 ? "#dc2626" : prop.dsc < 1.25 ? "#eab308" : "#16a34a"} />
-              <KPICard label="Loan Balance" value={fmtFull(prop.loanBal)} sub={`${prop.rate}% ${prop.rateType}`} />
-            </div>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
-              <KPICard label="Debt Service" value={fmtFull(prop.debtService)} sub="Annual" />
-              <KPICard label="Maturity" value={prop.maturity} sub={<MaturityFlag maturity={prop.maturity} />} />
-              <KPICard label="2025 NOI" value={fmtFull(prop.noi2025)} />
-              <KPICard label="2025 Distributions" value={fmtFull(prop.distros2025)} />
-            </div>
-
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:24 }}>
-              <div style={{ background:"#ffffff", border:"1px solid rgba(15,23,42,0.08)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#1f2937" }}>Property Details</div>
-                {[
-                  ["Square Footage", prop.sqft > 0 ? prop.sqft.toLocaleString() + " SF" : "N/A"],
-                  ["Investors", prop.investors],
-                  ["Pref Status", prop.prefStatus],
-                  ["Draw $ Available", prop.drawAvail > 0 ? fmtFull(prop.drawAvail) : "None"],
-                  ["2026 CapEx Budget", fmtFull(prop.capex2026)],
-                  ["Rate Reset", prop.rateReset],
-                  ["Key Tenants", prop.tenant],
-                ].map(([k,v]) => (
-                  <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid rgba(15,23,42,0.08)" }}>
-                    <span style={{ fontSize:13, color:"#94a3b8" }}>{k}</span>
-                    <span style={{ fontSize:13, fontWeight:500, color:"#0f172a", textAlign:"right", maxWidth:"60%" }}>{v}</span>
-                  </div>
-                ))}
+            <div style={{ background:"#ffffff", border:"1px solid rgba(15,23,42,0.10)", borderRadius:16, padding:24, boxShadow:"0 6px 20px rgba(15,23,42,0.06)" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
+                <h2 style={{ fontSize:28, fontWeight:700, margin:0, fontFamily:"'Playfair Display', serif" }}>{prop.name}</h2>
+                <StatusBadge status={prop.status} />
+                <span style={{ fontSize:13, color:"#64748b" }}>{prop.city}</span>
               </div>
-              <div style={{ background:"#ffffff", border:"1px solid rgba(15,23,42,0.08)", borderRadius:14, padding:24 }}>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#1f2937" }}>2026 Strategy & Risks</div>
-                <div style={{ fontSize:13, color:"#0f172a", lineHeight:1.7, marginBottom:16 }}>{prop.strategy}</div>
-                <div style={{ fontSize:14, fontWeight:600, marginBottom:8, color:"#f87171" }}>Key Risks</div>
-                <div style={{ fontSize:13, color:"#fca5a5", lineHeight:1.7 }}>{prop.risks}</div>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
+                <KPICard label="Occupancy" value={prop.occupancy < 0 ? "N/A" : prop.occupancy + "%"} accent={prop.occupancy < 0 ? "#94a3b8" : prop.occupancy < 70 ? "#dc2626" : prop.occupancy < 90 ? "#eab308" : "#16a34a"} />
+                <KPICard label="2026 Cash Flow" value={fmtFull(prop.cf2026)} accent={prop.cf2026 >= 0 ? "#16a34a" : "#dc2626"} />
+                <KPICard label="DSC" value={prop.dsc.toFixed(2) + "x"} accent={prop.dsc < 1 ? "#dc2626" : prop.dsc < 1.25 ? "#eab308" : "#16a34a"} />
+                <KPICard label="Loan Balance" value={fmtFull(prop.loanBal)} sub={`${prop.rate}% ${prop.rateType}`} />
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:14, marginBottom:24 }}>
+                <KPICard label="Debt Service" value={fmtFull(prop.debtService)} sub="Annual" />
+                <KPICard label="Maturity" value={prop.maturity} sub={<MaturityFlag maturity={prop.maturity} />} />
+                <KPICard label="2025 NOI" value={fmtFull(prop.noi2025)} />
+                <KPICard label="2025 Distributions" value={fmtFull(prop.distros2025)} />
+              </div>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:4 }}>
+                <div style={{ background:"#ffffff", border:"1px solid rgba(15,23,42,0.08)", borderRadius:14, padding:24, boxShadow:"0 4px 14px rgba(15,23,42,0.05)" }}>
+                  <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#1f2937" }}>Property Details</div>
+                  {[
+                    ["Square Footage", prop.sqft > 0 ? prop.sqft.toLocaleString() + " SF" : "N/A"],
+                    ["Investors", prop.investors],
+                    ["Pref Status", prop.prefStatus],
+                    ["Draw $ Available", prop.drawAvail > 0 ? fmtFull(prop.drawAvail) : "None"],
+                    ["2026 CapEx Budget", fmtFull(prop.capex2026)],
+                    ["Rate Reset", prop.rateReset],
+                    ["Key Tenants", prop.tenant],
+                  ].map(([k,v]) => (
+                    <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid rgba(15,23,42,0.08)" }}>
+                      <span style={{ fontSize:13, color:"#94a3b8" }}>{k}</span>
+                      <span style={{ fontSize:13, fontWeight:500, color:"#0f172a", textAlign:"right", maxWidth:"60%" }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ background:"#ffffff", border:"1px solid rgba(15,23,42,0.08)", borderRadius:14, padding:24, boxShadow:"0 4px 14px rgba(15,23,42,0.05)" }}>
+                  <div style={{ fontSize:14, fontWeight:600, marginBottom:12, color:"#1f2937" }}>2026 Strategy & Risks</div>
+                  <div style={{ fontSize:13, color:"#0f172a", lineHeight:1.7, marginBottom:16 }}>{prop.strategy}</div>
+                  <div style={{ fontSize:14, fontWeight:600, marginBottom:8, color:"#f87171" }}>Key Risks</div>
+                  <div style={{ fontSize:13, color:"#fca5a5", lineHeight:1.7 }}>{prop.risks}</div>
+                </div>
               </div>
             </div>
           </div>

@@ -16,13 +16,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Sidebar />
           <main className="flex-1">
             <header className="border-b border-slate-200 bg-slate-50/90 px-4 py-4 backdrop-blur md:hidden">
-              <div className="h-14 w-56 overflow-hidden">
+              <div className="h-24 w-24 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
                 <Image
-                  src="/anchor-logo.jpg"
+                  src="/anchor-icon.jpg"
                   alt="Anchor Investments"
-                  width={300}
-                  height={64}
-                  className="-ml-1 h-14 w-auto max-w-none"
+                  width={96}
+                  height={96}
+                  className="h-20 w-20 object-contain"
                   priority
                 />
               </div>

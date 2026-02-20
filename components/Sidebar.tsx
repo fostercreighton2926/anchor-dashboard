@@ -15,8 +15,8 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex md:w-72 md:flex-col md:border-r md:border-slate-200 md:bg-slate-50/95">
       <div className="border-b border-slate-200 px-6 py-8">
-        <div className="mb-4 flex h-16 w-48 items-center overflow-hidden rounded-xl border border-slate-200 bg-white px-3 shadow-sm">
-          <Image src="/anchor-logo.jpg" alt="Anchor Investments logo" width={220} height={56} className="h-12 w-auto object-contain" priority />
+        <div className="mb-4 flex h-28 w-28 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+          <Image src="/anchor-icon.jpg" alt="Anchor Investments icon" width={104} height={104} className="h-[104px] w-[104px] object-contain" priority />
         </div>
         <h1 className="text-xl font-semibold text-slate-900">Portfolio Command Center</h1>
       </div>
@@ -28,7 +28,7 @@ export default function Sidebar() {
             href={link.href}
             className={`mt-3 block rounded-lg border px-4 py-3 text-sm font-medium transition ${
               pathname === link.href
-                ? 'border-[#7A9A8A]/45 bg-[#7A9A8A]/14 text-[#456255] shadow-sm'
+                ? 'border-[#7A9A8A] bg-[#7A9A8A] text-white shadow-sm'
                 : 'border-slate-200 bg-white text-slate-700 hover:border-[#7A9A8A]/45 hover:bg-[#7A9A8A]/8'
             }`}
           >
